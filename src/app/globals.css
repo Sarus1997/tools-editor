@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 .btn-primary {
   @apply rounded-xl px-5 py-3 font-semibold bg-indigo-500 text-white hover:bg-indigo-600 transition;
 }
