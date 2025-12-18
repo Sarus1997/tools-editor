@@ -12,12 +12,14 @@ import {
 } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { ReactNode } from "react";
+
+type Lang = "en" | "th" | "ja";
 
 export default function HomePage() {
   const { lang } = useLanguage();
   const { scrollY } = useScroll();
 
-  // ===== i18n (FIXED – no syntax error) =====
   const t = {
     en: {
       title: "PDF Tools",
@@ -61,9 +63,8 @@ export default function HomePage() {
       comingImage: "PDFを画像に変換（近日公開）",
       comingSearch: "PDF内検索（近日公開）",
     },
-  }[lang];
+  }[lang as Lang];
 
-  // ===== Parallax =====
   const titleY = useTransform(scrollY, [0, 300], [0, -60]);
   const gridY = useTransform(scrollY, [0, 300], [0, -30]);
 
@@ -78,14 +79,17 @@ export default function HomePage() {
 
   return (
     <div className="relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-linear-to-b from-indigo-50 via-white to-white" />
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-linear-to-b from-indigo-50 via-white to-white dark:from-zinc-900 dark:via-zinc-900 dark:to-zinc-900" />
 
-      <motion.div style={{ y: titleY }} className="mx-auto max-w-275 px-6 py-14 text-center">
+      <motion.div
+        style={{ y: titleY }}
+        className="mx-auto max-w-7xl px-6 py-20 text-center"
+      >
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-3 text-4xl font-bold md:text-5xl"
+          className="mb-4 text-4xl font-bold md:text-5xl"
         >
           {t.title}
         </motion.h1>
@@ -94,7 +98,7 @@ export default function HomePage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="mx-auto mb-14 max-w-xl text-lg text-gray-600"
+          className="mx-auto mb-16 max-w-xl text-lg text-gray-600 dark:text-gray-400"
         >
           {t.subtitle}
         </motion.p>
@@ -104,7 +108,7 @@ export default function HomePage() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid gap-8 grid-cols-[repeat(auto-fit,minmax(260px,1fr))]"
+          className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
         >
           <ToolCard index={1} variants={cardVariants} href="/merger" icon={<FileEdit size={44} />} title={t.merge} desc={t.mergeDesc} />
           <ToolCard index={2} variants={cardVariants} href="/compress" icon={<FileDown size={44} />} title={t.compress} desc={t.compressDesc} />
@@ -120,27 +124,42 @@ export default function HomePage() {
   );
 }
 
-function ToolCard({ href, icon, title, desc, variants, index }: any) {
+interface CardProps {
+  href?: string;
+  icon: ReactNode;
+  title: string;
+  desc?: string;
+  variants: any;
+  index: number;
+}
+
+function ToolCard({ href, icon, title, desc, variants, index }: CardProps) {
   return (
     <motion.div custom={index} variants={variants}>
       <Link
-        href={href}
-        className="group relative flex h-full flex-col rounded-2xl border border-gray-200 bg-white p-8 text-left shadow-sm transition-all hover:-translate-y-2 hover:shadow-xl"
+        href={href!}
+        className="group flex h-full flex-col rounded-2xl border border-gray-200 bg-white p-8 text-left shadow-sm transition-all hover:-translate-y-2 hover:shadow-xl dark:border-zinc-700 dark:bg-zinc-800"
       >
-        <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600 transition group-hover:scale-110">
+        <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600 transition group-hover:scale-110 dark:bg-indigo-500/10">
           {icon}
         </div>
         <h2 className="text-xl font-semibold">{title}</h2>
-        <p className="mt-2 text-sm text-gray-500">{desc}</p>
+        <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">{desc}</p>
       </Link>
     </motion.div>
   );
 }
 
-function DisabledCard({ icon, title, variants, index }: any) {
+function DisabledCard({ icon, title, variants, index }: CardProps) {
   return (
-    <motion.div custom={index} variants={variants} className="rounded-2xl border border-gray-200 bg-white p-8 opacity-40">
-      <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gray-100">{icon}</div>
+    <motion.div
+      custom={index}
+      variants={variants}
+      className="rounded-2xl border border-gray-200 bg-white p-8 opacity-40 dark:border-zinc-700 dark:bg-zinc-800"
+    >
+      <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gray-100 dark:bg-zinc-700">
+        {icon}
+      </div>
       <h2 className="text-xl font-semibold">{title}</h2>
     </motion.div>
   );
