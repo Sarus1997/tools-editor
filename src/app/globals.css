@@ -1,11 +1,102 @@
 @import "tailwindcss";
 
+/* กำหนด custom variant */
 @custom-variant dark (&:where(.dark, .dark *));
 
-.btn-primary {
-  @apply rounded-xl px-5 py-3 font-semibold bg-indigo-500 text-white hover:bg-indigo-600 transition;
+:root {
+  --animate-gradient: gradient 3s ease infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-slow: pulse-slow 3s ease-in-out infinite;
+  --animate-fade-in: fade-in 0.3s ease-out;
 }
 
-.btn-secondary {
-  @apply rounded-xl px-4 py-2 font-semibold bg-zinc-200 dark:bg-zinc-700 hover:opacity-90 transition;
+/* กำหนด animation keyframes */
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+  }
+}
+
+@keyframes pulse-slow {
+
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Utility classes สำหรับ animation */
+.animate-gradient {
+  animation: gradient 3s ease infinite;
+  background-size: 200% 200%;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s ease-in-out infinite;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+.bg-size-200 {
+  background-size: 200% 200%;
+}
+
+/* Custom scrollbar สำหรับ Sidebar */
+.scrollbar-gradient::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-gradient::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-gradient::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #8b5cf6, #ec4899);
+  border-radius: 3px;
+}
+
+.scrollbar-gradient::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #7c3aed, #db2777);
 }

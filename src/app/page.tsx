@@ -189,7 +189,7 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-zinc-950 dark:via-zinc-900 dark:to-indigo-950/30">
+    <div className="relative min-h-screen overflow-hidden bg-linear-to-br from-slate-50 via-white to-indigo-50/30 dark:from-zinc-950 dark:via-zinc-900 dark:to-indigo-950/30">
       {/* Animated Background Elements */}
       <Particles count={80} />
 
@@ -209,9 +209,9 @@ export default function HomePage() {
         ))}
       </div>
 
-      {/* Gradient Orbs */}
-      <div className="absolute top-0 left-1/4 h-96 w-96 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 blur-3xl" />
-      <div className="absolute bottom-0 right-1/4 h-96 w-96 rounded-full bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 blur-3xl" />
+      {/* linear Orbs */}
+      <div className="absolute top-0 left-1/4 h-96 w-96 rounded-full bg-linear-to-r from-blue-500/10 to-purple-500/10 blur-3xl" />
+      <div className="absolute bottom-0 right-1/4 h-96 w-96 rounded-full bg-linear-to-r from-emerald-500/10 to-cyan-500/10 blur-3xl" />
 
       <motion.div
         style={{ y: springTitleY, scale, opacity }}
@@ -223,14 +223,14 @@ export default function HomePage() {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="absolute -inset-4 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-3xl blur-xl opacity-20"
+            className="absolute -inset-4 bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 rounded-3xl blur-xl opacity-20"
           />
 
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="relative mb-6 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-5xl font-bold text-transparent md:text-7xl"
+            className="relative mb-6 bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-5xl font-bold text-transparent md:text-7xl"
           >
             {t.title}
             <Sparkles className="inline ml-4 h-10 w-10 text-yellow-500" />
@@ -396,7 +396,7 @@ export default function HomePage() {
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="rounded-3xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-12 text-white"
+          className="rounded-3xl bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 p-12 text-white"
         >
           <div className="mx-auto max-w-2xl">
             <h2 className="mb-4 text-3xl font-bold">
@@ -446,14 +446,14 @@ function ToolCard({ href, icon, title, desc, variants, index, color, isHovered, 
         href={href!}
         className="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-white/80 p-8 text-left backdrop-blur-sm transition-all dark:bg-zinc-800/80"
       >
-        {/* Animated Gradient Border */}
-        <div className={`absolute inset-0 bg-gradient-to-br ${color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
+        {/* Animated linear Border */}
+        <div className={`absolute inset-0 bg-linear-to-br ${color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
 
         {/* Corner Accents */}
-        <div className={`absolute top-0 right-0 h-24 w-24 -translate-y-12 translate-x-12 bg-gradient-to-br ${color} opacity-0 group-hover:opacity-20 rounded-full blur-xl transition-opacity duration-300`} />
+        <div className={`absolute top-0 right-0 h-24 w-24 -translate-y-12 translate-x-12 bg-linear-to-br ${color} opacity-0 group-hover:opacity-20 rounded-full blur-xl transition-opacity duration-300`} />
 
         <div className="relative z-10">
-          <div className={`mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br ${color} p-4 text-white transition-all duration-300 group-hover:scale-110 group-hover:rotate-3`}>
+          <div className={`mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-linear-to-br ${color} p-4 text-white transition-all duration-300 group-hover:scale-110 group-hover:rotate-3`}>
             {icon}
           </div>
 
@@ -475,7 +475,7 @@ function ToolCard({ href, icon, title, desc, variants, index, color, isHovered, 
           <motion.div
             initial={{ width: 0 }}
             whileHover={{ width: "100%" }}
-            className="mt-6 h-1 bg-gradient-to-r from-transparent via-current to-transparent"
+            className="mt-6 h-1 bg-linear-to-r from-transparent via-current to-transparent"
           />
         </div>
       </Link>
@@ -488,13 +488,13 @@ function ComingSoonCard({ icon, title, desc, variants, index, color }: CardProps
     <motion.div
       custom={index}
       variants={variants}
-      className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-gray-100 to-gray-50/50 p-8 backdrop-blur-sm dark:from-zinc-800/50 dark:to-zinc-900/50"
+      className="group relative overflow-hidden rounded-3xl bg-linear-to-br from-gray-100 to-gray-50/50 p-8 backdrop-blur-sm dark:from-zinc-800/50 dark:to-zinc-900/50"
     >
       {/* Shimmer Effect */}
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+      <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
 
       <div className="relative">
-        <div className={`mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br ${color} p-4 opacity-80`}>
+        <div className={`mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-linear-to-br ${color} p-4 opacity-80`}>
           {icon}
         </div>
 
@@ -502,7 +502,7 @@ function ComingSoonCard({ icon, title, desc, variants, index, color }: CardProps
           <h2 className="text-2xl font-bold text-gray-900/50 dark:text-white/50">
             {title}
           </h2>
-          <span className="rounded-full bg-gradient-to-r from-amber-400 to-orange-500 px-3 py-1 text-xs font-semibold text-white">
+          <span className="rounded-full bg-linear-to-r from-amber-400 to-orange-500 px-3 py-1 text-xs font-semibold text-white">
             SOON
           </span>
         </div>

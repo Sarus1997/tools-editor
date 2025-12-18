@@ -31,7 +31,7 @@ const MENU_ITEMS = [
     th: "หน้าแรก",
     ja: "ホーム",
     icon: "🏠",
-    gradient: "from-blue-500 to-cyan-500"
+    linear: "from-blue-500 to-cyan-500"
   },
   {
     href: "/about",
@@ -39,7 +39,7 @@ const MENU_ITEMS = [
     th: "เกี่ยวกับ",
     ja: "概要",
     icon: "📖",
-    gradient: "from-purple-500 to-pink-500"
+    linear: "from-purple-500 to-pink-500"
   },
   {
     href: "/contact",
@@ -47,7 +47,7 @@ const MENU_ITEMS = [
     th: "ติดต่อ",
     ja: "お問い合わせ",
     icon: "📞",
-    gradient: "from-orange-500 to-red-500"
+    linear: "from-orange-500 to-red-500"
   },
   {
     href: "/features",
@@ -55,7 +55,7 @@ const MENU_ITEMS = [
     th: "ฟีเจอร์",
     ja: "特徴",
     icon: "✨",
-    gradient: "from-green-500 to-emerald-500"
+    linear: "from-green-500 to-emerald-500"
   },
   {
     href: "/pricing",
@@ -63,7 +63,7 @@ const MENU_ITEMS = [
     th: "ราคา",
     ja: "料金",
     icon: "💰",
-    gradient: "from-yellow-500 to-amber-500"
+    linear: "from-yellow-500 to-amber-500"
   },
   {
     href: "/tools",
@@ -71,7 +71,7 @@ const MENU_ITEMS = [
     th: "เครื่องมือ",
     ja: "ツール",
     icon: "🛠️",
-    gradient: "from-indigo-500 to-blue-500"
+    linear: "from-indigo-500 to-blue-500"
   }
 ];
 
@@ -109,7 +109,7 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
 
   return (
     <>
-      {/* Overlay with animated gradient */}
+      {/* Overlay with animated linear */}
       <div
         className={`fixed inset-0 z-50 transition-all duration-700 ease-in-out ${open
           ? "visible opacity-100 backdrop-blur-md"
@@ -117,14 +117,14 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
           }`}
         onClick={onClose}
       >
-        {/* Animated gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/20 via-purple-900/20 to-pink-900/20"></div>
+        {/* Animated linear background */}
+        <div className="absolute inset-0 bg-linear-to-br from-indigo-900/20 via-purple-900/20 to-pink-900/20"></div>
 
         {/* Floating particles */}
         {[...Array(15)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-2 h-2 rounded-full bg-gradient-to-r from-indigo-400/40 to-purple-400/40"
+            className="absolute w-2 h-2 rounded-full bg-linear-to-r from-indigo-400/40 to-purple-400/40"
             style={{
               top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
@@ -146,17 +146,17 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
           className="relative h-full w-full overflow-hidden"
           style={{
             background: theme === "light"
-              ? "linear-gradient(145deg, rgba(255,255,255,0.95) 0%, rgba(248,250,252,0.95) 100%)"
-              : "linear-gradient(145deg, rgba(15,15,20,0.95) 0%, rgba(9,9,12,0.95) 100%)",
+              ? "linear-linear(145deg, rgba(255,255,255,0.95) 0%, rgba(248,250,252,0.95) 100%)"
+              : "linear-linear(145deg, rgba(15,15,20,0.95) 0%, rgba(9,9,12,0.95) 100%)",
             backdropFilter: "blur(20px)",
           }}
         >
-          {/* Decorative gradient border */}
-          <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-purple-500/10 to-pink-500/10 pointer-events-none"></div>
+          {/* Decorative linear border */}
+          <div className="absolute inset-0 bg-linear-to-br from-indigo-500/10 via-purple-500/10 to-pink-500/10 pointer-events-none"></div>
 
           {/* Animated floating orbs */}
-          <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-gradient-to-r from-indigo-500/20 to-purple-500/20 blur-3xl"></div>
-          <div className="absolute -bottom-20 -left-20 w-40 h-40 rounded-full bg-gradient-to-r from-pink-500/20 to-orange-500/20 blur-3xl"></div>
+          <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-linear-to-r from-indigo-500/20 to-purple-500/20 blur-3xl"></div>
+          <div className="absolute -bottom-20 -left-20 w-40 h-40 rounded-full bg-linear-to-r from-pink-500/20 to-orange-500/20 blur-3xl"></div>
 
           {/* Header section */}
           <div className="relative z-10 p-8 border-b border-white/10 dark:border-zinc-800/50">
@@ -164,13 +164,13 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
               {/* Logo with animation */}
               <div className="flex items-center gap-3">
                 <div className="relative">
-                  <div className="absolute -inset-4 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full blur-xl opacity-50 animate-pulse-slow"></div>
-                  <div className="relative w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-2xl transform hover:rotate-12 transition-transform duration-500">
+                  <div className="absolute -inset-4 bg-linear-to-r from-indigo-500 to-purple-600 rounded-full blur-xl opacity-50 animate-pulse-slow"></div>
+                  <div className="relative w-14 h-14 rounded-2xl bg-linear-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-2xl transform hover:rotate-12 transition-transform duration-500">
                     <span className="text-3xl">📄</span>
                   </div>
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient">
+                  <h2 className="text-2xl font-bold bg-linear-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-linear">
                     PDF EDITOR
                   </h2>
                   <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
@@ -187,7 +187,7 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
                 className="relative group w-12 h-12 rounded-2xl flex items-center justify-center"
                 aria-label="Close menu"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-red-500/0 to-orange-500/0 group-hover:from-red-500/20 group-hover:to-orange-500/20 rounded-2xl transition-all duration-300"></div>
+                <div className="absolute inset-0 bg-linear-to-r from-red-500/0 to-orange-500/0 group-hover:from-red-500/20 group-hover:to-orange-500/20 rounded-2xl transition-all duration-300"></div>
                 <div className="relative z-10 text-2xl transform transition-all duration-300 group-hover:rotate-90 group-hover:scale-110">
                   <span className="text-red-500 group-hover:text-red-400">✕</span>
                 </div>
@@ -195,11 +195,11 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
             </div>
 
             {/* User info card */}
-            <div className="relative overflow-hidden rounded-2xl p-4 bg-gradient-to-r from-white/50 to-white/30 dark:from-zinc-800/50 dark:to-zinc-800/30 backdrop-blur-sm border border-white/20 dark:border-zinc-700/30">
+            <div className="relative overflow-hidden rounded-2xl p-4 bg-linear-to-r from-white/50 to-white/30 dark:from-zinc-800/50 dark:to-zinc-800/30 backdrop-blur-sm border border-white/20 dark:border-zinc-700/30">
               <div className="flex items-center gap-3">
                 <div className="relative">
-                  <div className="absolute -inset-2 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full blur opacity-30"></div>
-                  <div className="relative w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center">
+                  <div className="absolute -inset-2 bg-linear-to-r from-cyan-500 to-blue-500 rounded-full blur opacity-30"></div>
+                  <div className="relative w-12 h-12 rounded-xl bg-linear-to-br from-cyan-400 to-blue-500 flex items-center justify-center">
                     <span className="text-xl">👤</span>
                   </div>
                 </div>
@@ -215,7 +215,7 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
                     {lang === "ja" && "プレミアムメンバー"}
                   </p>
                 </div>
-                <div className="px-3 py-1 rounded-full bg-gradient-to-r from-emerald-500 to-green-500 text-white text-xs font-semibold">
+                <div className="px-3 py-1 rounded-full bg-linear-to-r from-emerald-500 to-green-500 text-white text-xs font-semibold">
                   PRO
                 </div>
               </div>
@@ -250,12 +250,12 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
                         : "hover:shadow-md"
                         }`}
                     >
-                      {/* Background gradient effect */}
-                      <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${item.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300 ${isActive ? 'opacity-10' : ''}`}></div>
+                      {/* Background linear effect */}
+                      <div className={`absolute inset-0 rounded-2xl bg-linear-to-r ${item.linear} opacity-0 group-hover:opacity-10 transition-opacity duration-300 ${isActive ? 'opacity-10' : ''}`}></div>
 
                       {/* Icon container */}
                       <div className={`relative w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 ${isActive
-                        ? `bg-gradient-to-br ${item.gradient} shadow-lg`
+                        ? `bg-linear-to-br ${item.linear} shadow-lg`
                         : 'bg-white/50 dark:bg-zinc-800/50 group-hover:bg-white/80 dark:group-hover:bg-zinc-700/80'
                         }`}>
                         <span className={`text-xl transition-transform duration-300 group-hover:scale-110 ${isActive ? 'text-white' : ''
@@ -264,19 +264,19 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
                         </span>
                         {/* Active indicator */}
                         {isActive && (
-                          <div className="absolute -right-1 -top-1 w-3 h-3 rounded-full bg-gradient-to-r from-green-400 to-emerald-500 ring-2 ring-white dark:ring-zinc-900"></div>
+                          <div className="absolute -right-1 -top-1 w-3 h-3 rounded-full bg-linear-to-r from-green-400 to-emerald-500 ring-2 ring-white dark:ring-zinc-900"></div>
                         )}
                       </div>
 
                       {/* Text */}
                       <div className="flex-1">
                         <span className={`font-medium transition-colors duration-300 ${isActive
-                          ? 'bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent'
+                          ? 'bg-linear-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent'
                           : 'text-zinc-700 dark:text-zinc-300'
                           }`}>
                           {getLabel(item)}
                         </span>
-                        <div className="h-1 w-0 group-hover:w-full bg-gradient-to-r from-transparent via-current to-transparent transition-all duration-500 mt-1 opacity-50"></div>
+                        <div className="h-1 w-0 group-hover:w-full bg-linear-to-r from-transparent via-current to-transparent transition-all duration-500 mt-1 opacity-50"></div>
                       </div>
 
                       {/* Arrow indicator */}
@@ -299,7 +299,7 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
 
             {/* Divider */}
             <div className="my-8 relative">
-              <div className="h-px bg-gradient-to-r from-transparent via-zinc-300 dark:via-zinc-700 to-transparent"></div>
+              <div className="h-px bg-linear-to-r from-transparent via-zinc-300 dark:via-zinc-700 to-transparent"></div>
               <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 px-4 bg-white dark:bg-zinc-900 text-xs text-zinc-500">
                 {lang === "en" && "SETTINGS"}
                 {lang === "th" && "การตั้งค่า"}
@@ -322,7 +322,7 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
                       key={l}
                       onClick={() => setLang(l)}
                       className={`flex flex-col items-center justify-center p-3 rounded-xl transition-all duration-300 ${lang === l
-                        ? "bg-gradient-to-br from-indigo-500 to-purple-600 shadow-lg transform scale-105"
+                        ? "bg-linear-to-br from-indigo-500 to-purple-600 shadow-lg transform scale-105"
                         : "bg-white/50 dark:bg-zinc-800/50 hover:bg-white/80 dark:hover:bg-zinc-700/80"
                         }`}
                     >
@@ -354,12 +354,12 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
                   onClick={toggleTheme}
                   className="relative w-full overflow-hidden rounded-xl group"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-amber-400/0 to-orange-500/0 group-hover:from-amber-400/20 group-hover:to-orange-500/20 transition-all duration-500"></div>
+                  <div className="absolute inset-0 bg-linear-to-r from-amber-400/0 to-orange-500/0 group-hover:from-amber-400/20 group-hover:to-orange-500/20 transition-all duration-500"></div>
                   <div className="relative z-10 flex items-center justify-between p-4">
                     <div className="flex items-center gap-3">
                       <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${theme === "light"
-                        ? "bg-gradient-to-br from-amber-400 to-orange-500"
-                        : "bg-gradient-to-br from-indigo-600 to-purple-700"
+                        ? "bg-linear-to-br from-amber-400 to-orange-500"
+                        : "bg-linear-to-br from-indigo-600 to-purple-700"
                         }`}>
                         <span className="text-2xl">
                           {theme === "light" ? "☀️" : "🌙"}
@@ -380,7 +380,7 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
                         </div>
                       </div>
                     </div>
-                    <div className="relative w-14 h-8 rounded-full bg-gradient-to-r from-zinc-300 to-zinc-400 dark:from-zinc-700 dark:to-zinc-800 p-1">
+                    <div className="relative w-14 h-8 rounded-full bg-linear-to-r from-zinc-300 to-zinc-400 dark:from-zinc-700 dark:to-zinc-800 p-1">
                       <div className={`w-6 h-6 rounded-full bg-white shadow-lg transform transition-transform duration-500 ${theme === "dark" ? "translate-x-6" : ""
                         }`}></div>
                     </div>
@@ -394,11 +394,11 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
           <div className="absolute bottom-0 left-0 right-0 z-10 p-6 border-t border-white/10 dark:border-zinc-800/50">
             <div className="text-center">
               <div className="flex items-center justify-center gap-2 mb-3">
-                <div className="w-2 h-2 rounded-full bg-gradient-to-r from-green-400 to-emerald-500"></div>
-                <div className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-400 to-cyan-500"></div>
-                <div className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-pink-500"></div>
+                <div className="w-2 h-2 rounded-full bg-linear-to-r from-green-400 to-emerald-500"></div>
+                <div className="w-2 h-2 rounded-full bg-linear-to-r from-blue-400 to-cyan-500"></div>
+                <div className="w-2 h-2 rounded-full bg-linear-to-r from-purple-400 to-pink-500"></div>
               </div>
-              <div className="text-sm font-bold bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-1">
+              <div className="text-sm font-bold bg-linear-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-1">
                 ITD TEAM ⚒️
               </div>
               <div className="text-xs text-zinc-500 dark:text-zinc-400">
@@ -410,7 +410,7 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
       </div>
 
       <style jsx global>{`
-        @keyframes gradient {
+        @keyframes linear {
           0% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
           100% { background-position: 0% 50%; }
@@ -426,8 +426,8 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
           50% { opacity: 0.8; }
         }
         
-        .animate-gradient {
-          animation: gradient 3s ease infinite;
+        .animate-linear {
+          animation: linear 3s ease infinite;
           background-size: 200% 200%;
         }
         
@@ -450,12 +450,12 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
         }
         
         .overflow-y-auto::-webkit-scrollbar-thumb {
-          background: linear-gradient(to bottom, #8b5cf6, #ec4899);
+          background: linear-linear(to bottom, #8b5cf6, #ec4899);
           border-radius: 3px;
         }
         
         .overflow-y-auto::-webkit-scrollbar-thumb:hover {
-          background: linear-gradient(to bottom, #7c3aed, #db2777);
+          background: linear-linear(to bottom, #7c3aed, #db2777);
         }
       `}</style>
     </>

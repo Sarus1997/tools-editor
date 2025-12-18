@@ -70,15 +70,15 @@ export default function Navbar() {
         style={{
           background: scrolled
             ? theme === "light"
-              ? "linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(248,250,252,0.95) 100%)"
-              : "linear-gradient(135deg, rgba(24,24,27,0.95) 0%, rgba(9,9,11,0.95) 100%)"
+              ? "linear-linear(135deg, rgba(255,255,255,0.95) 0%, rgba(248,250,252,0.95) 100%)"
+              : "linear-linear(135deg, rgba(24,24,27,0.95) 0%, rgba(9,9,11,0.95) 100%)"
             : theme === "light"
-              ? "linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)"
-              : "linear-gradient(135deg, #18181b 0%, #09090b 100%)",
+              ? "linear-linear(135deg, #ffffff 0%, #f8fafc 100%)"
+              : "linear-linear(135deg, #18181b 0%, #09090b 100%)",
         }}
       >
         {/* Decorative top accent line */}
-        <div className="h-1 w-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
+        <div className="h-1 w-full bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
 
         <div className="mx-auto max-w-350 px-6 h-20 flex items-center justify-between">
           {/* LEFT */}
@@ -90,20 +90,20 @@ export default function Navbar() {
               aria-label="Open menu"
             >
               {/* Animated background */}
-              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-linear-to-r from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
 
               {/* Animated hamburger lines */}
               <div className="flex flex-col items-center w-6 space-y-1.5">
                 <span
-                  className={`h-0.5 w-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 transform transition-all duration-300 ${open ? "rotate-45 translate-y-2" : ""
+                  className={`h-0.5 w-full rounded-full bg-linear-to-r from-indigo-500 to-purple-500 transform transition-all duration-300 ${open ? "rotate-45 translate-y-2" : ""
                     }`}
                 ></span>
                 <span
-                  className={`h-0.5 w-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-300 ${open ? "opacity-0" : "opacity-100"
+                  className={`h-0.5 w-full rounded-full bg-linear-to-r from-indigo-500 to-purple-500 transition-all duration-300 ${open ? "opacity-0" : "opacity-100"
                     }`}
                 ></span>
                 <span
-                  className={`h-0.5 w-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 transform transition-all duration-300 ${open ? "-rotate-45 -translate-y-2" : ""
+                  className={`h-0.5 w-full rounded-full bg-linear-to-r from-indigo-500 to-purple-500 transform transition-all duration-300 ${open ? "-rotate-45 -translate-y-2" : ""
                     }`}
                 ></span>
               </div>
@@ -117,19 +117,19 @@ export default function Navbar() {
               onMouseLeave={() => setIsHoverLogo(false)}
             >
               {/* Animated background effect */}
-              <div className="absolute -inset-3 rounded-2xl bg-gradient-to-r from-indigo-500/0 via-purple-500/0 to-pink-500/0 transition-all duration-500 group-hover:from-indigo-500/10 group-hover:via-purple-500/10 group-hover:to-pink-500/10"></div>
+              <div className="absolute -inset-3 rounded-2xl bg-linear-to-r from-indigo-500/0 via-purple-500/0 to-pink-500/0 transition-all duration-500 group-hover:from-indigo-500/10 group-hover:via-purple-500/10 group-hover:to-pink-500/10"></div>
 
               {/* Icon with glow effect */}
               <div className="relative">
-                <div className="absolute -inset-3 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full blur opacity-20 group-hover:opacity-30 transition-all duration-500"></div>
-                <div className="relative flex items-center justify-center w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg transform transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
+                <div className="absolute -inset-3 bg-linear-to-r from-indigo-500 to-purple-500 rounded-full blur opacity-20 group-hover:opacity-30 transition-all duration-500"></div>
+                <div className="relative flex items-center justify-center w-12 h-12 bg-linear-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg transform transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
                   <span className="text-2xl">📄</span>
                 </div>
               </div>
 
-              {/* Logo text with gradient animation */}
+              {/* Logo text with linear animation */}
               <div className="relative">
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent bg-size-200 animate-gradient">
+                <h1 className="text-2xl font-bold bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent bg-size-200 animate-linear">
                   PDF EDITOR
                 </h1>
                 <p className="text-xs text-zinc-500 dark:text-zinc-400 font-medium tracking-wide">
@@ -154,7 +154,7 @@ export default function Navbar() {
                   {lang === "th" && "หน้าแรก"}
                   {lang === "ja" && "ホーム"}
                 </span>
-                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-indigo-500/0 to-purple-500/0 group-hover:from-indigo-500/10 group-hover:to-purple-500/10 transition-all duration-300"></div>
+                <div className="absolute inset-0 rounded-xl bg-linear-to-r from-indigo-500/0 to-purple-500/0 group-hover:from-indigo-500/10 group-hover:to-purple-500/10 transition-all duration-300"></div>
               </Link>
 
               <Link
@@ -166,7 +166,7 @@ export default function Navbar() {
                   {lang === "th" && "เกี่ยวกับ"}
                   {lang === "ja" && "概要"}
                 </span>
-                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-indigo-500/0 to-purple-500/0 group-hover:from-indigo-500/10 group-hover:to-purple-500/10 transition-all duration-300"></div>
+                <div className="absolute inset-0 rounded-xl bg-linear-to-r from-indigo-500/0 to-purple-500/0 group-hover:from-indigo-500/10 group-hover:to-purple-500/10 transition-all duration-300"></div>
               </Link>
 
               <Link
@@ -178,12 +178,12 @@ export default function Navbar() {
                   {lang === "th" && "ติดต่อ"}
                   {lang === "ja" && "お問い合わせ"}
                 </span>
-                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-indigo-500/0 to-purple-500/0 group-hover:from-indigo-500/10 group-hover:to-purple-500/10 transition-all duration-300"></div>
+                <div className="absolute inset-0 rounded-xl bg-linear-to-r from-indigo-500/0 to-purple-500/0 group-hover:from-indigo-500/10 group-hover:to-purple-500/10 transition-all duration-300"></div>
               </Link>
             </div>
 
             {/* Divider */}
-            <div className="h-8 w-px bg-gradient-to-b from-transparent via-zinc-300 dark:via-zinc-700 to-transparent mx-2"></div>
+            <div className="h-8 w-px bg-linear-to-b from-transparent via-zinc-300 dark:via-zinc-700 to-transparent mx-2"></div>
 
             {/* THEME toggle button with animation */}
             <button
@@ -192,19 +192,19 @@ export default function Navbar() {
               aria-label="Toggle theme"
             >
               {/* Background effect */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-indigo-500/0 to-purple-500/0 group-hover:from-indigo-500/10 group-hover:to-purple-500/10 transition-all duration-500"></div>
+              <div className="absolute inset-0 rounded-2xl bg-linear-to-r from-indigo-500/0 to-purple-500/0 group-hover:from-indigo-500/10 group-hover:to-purple-500/10 transition-all duration-500"></div>
 
               {/* Icon */}
-              <div className="relative z-10 flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-zinc-100 to-white dark:from-zinc-800 dark:to-zinc-900 shadow-lg transform transition-transform duration-500 group-hover:scale-110 group-hover:rotate-12">
+              <div className="relative z-10 flex items-center justify-center w-10 h-10 rounded-xl bg-linear-to-br from-zinc-100 to-white dark:from-zinc-800 dark:to-zinc-900 shadow-lg transform transition-transform duration-500 group-hover:scale-110 group-hover:rotate-12">
                 {theme === "light" ? (
                   <div className="relative">
                     <span className="text-xl">🌙</span>
-                    <div className="absolute -inset-1 bg-gradient-to-r from-indigo-400 to-purple-400 rounded-full blur opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
+                    <div className="absolute -inset-1 bg-linear-to-r from-indigo-400 to-purple-400 rounded-full blur opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
                   </div>
                 ) : (
                   <div className="relative">
                     <span className="text-xl">☀️</span>
-                    <div className="absolute -inset-1 bg-gradient-to-r from-amber-400 to-orange-400 rounded-full blur opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
+                    <div className="absolute -inset-1 bg-linear-to-r from-amber-400 to-orange-400 rounded-full blur opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
                   </div>
                 )}
               </div>
@@ -218,10 +218,10 @@ export default function Navbar() {
                 aria-label="Select language"
               >
                 {/* Animated background */}
-                <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/0 via-purple-500/0 to-pink-500/0 group-hover:from-indigo-500/10 group-hover:via-purple-500/10 group-hover:to-pink-500/10 transition-all duration-500"></div>
+                <div className="absolute inset-0 bg-linear-to-r from-indigo-500/0 via-purple-500/0 to-pink-500/0 group-hover:from-indigo-500/10 group-hover:via-purple-500/10 group-hover:to-pink-500/10 transition-all duration-500"></div>
 
                 {/* Border effect */}
-                <div className="absolute inset-0 rounded-2xl border-2 border-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-border opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 rounded-2xl border-2 border-transparent bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-border opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
                 {/* Content */}
                 <div className="relative z-10 flex items-center gap-3">
@@ -234,7 +234,7 @@ export default function Navbar() {
                       className="object-cover"
                     />
                   </div>
-                  <span className="text-sm font-semibold uppercase tracking-wide bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
+                  <span className="text-sm font-semibold uppercase tracking-wide bg-linear-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
                     {lang}
                   </span>
                   <svg
@@ -272,7 +272,7 @@ export default function Navbar() {
                           setLangOpen(false);
                         }}
                         className={`flex w-full items-center gap-4 px-4 py-3.5 rounded-xl mb-1 last:mb-0 transition-all duration-300 group ${lang === l
-                          ? "bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/30 dark:to-purple-900/30 shadow-sm"
+                          ? "bg-linear-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/30 dark:to-purple-900/30 shadow-sm"
                           : "hover:bg-zinc-100/80 dark:hover:bg-zinc-800/80"
                           }`}
                       >
@@ -295,7 +295,7 @@ export default function Navbar() {
                         </div>
                         {lang === l && (
                           <div className="ml-auto">
-                            <div className="w-2 h-2 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500"></div>
+                            <div className="w-2 h-2 rounded-full bg-linear-to-r from-indigo-500 to-purple-500"></div>
                           </div>
                         )}
                       </button>
@@ -313,7 +313,7 @@ export default function Navbar() {
         {[...Array(5)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-1 h-1 rounded-full bg-gradient-to-r from-indigo-400/30 to-purple-400/30"
+            className="absolute w-1 h-1 rounded-full bg-linear-to-r from-indigo-400/30 to-purple-400/30"
             style={{
               top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
@@ -327,7 +327,7 @@ export default function Navbar() {
       <Sidebar open={open} onClose={() => setOpen(false)} />
 
       <style jsx global>{`
-        @keyframes gradient {
+        @keyframes linear {
           0% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
           100% { background-position: 0% 50%; }
@@ -343,8 +343,8 @@ export default function Navbar() {
           to { opacity: 1; transform: translateY(0); }
         }
         
-        .animate-gradient {
-          animation: gradient 3s ease infinite;
+        .animate-linear {
+          animation: linear 3s ease infinite;
           background-size: 200% 200%;
         }
         
