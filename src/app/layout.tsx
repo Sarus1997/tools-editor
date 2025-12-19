@@ -36,7 +36,7 @@ export default function RootLayout({
             <Navbar />
 
             {/* เนื้อหาหน้า */}
-            <main className="pt-20">
+            <main>
               {children}
             </main>
           </LanguageProvider>

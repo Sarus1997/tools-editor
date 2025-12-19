@@ -187,38 +187,110 @@ export default function PremiumLanding() {
   const features = [
     {
       icon: Shield,
-      title: "Secure & Private",
-      desc: "Files processed locally, never uploaded",
+      title: (
+        <>
+          {lang === "en" && "Secure & Private"}
+          {lang === "th" && "ปลอดภัยและเป็นส่วนตัว"}
+          {lang === "ja" && "安全かつプライベート"}
+        </>
+      ),
+      desc: (
+        <>
+          {lang === "en" && "Files processed locally, never uploaded"}
+          {lang === "th" && "ไฟล์ถูกประมวลผลในเครื่อง ไม่เคยอัปโหลด"}
+          {lang === "ja" && "ファイルはローカルで処理され、アップロードされることはありません"}
+        </>
+      ),
       linear: "from-emerald-400 to-teal-400"
     },
     {
       icon: Zap,
-      title: "Lightning Fast",
-      desc: "Optimized for instant processing",
+      title: (
+        <>
+          {lang === "en" && "Lightning Fast"}
+          {lang === "th" && "เร็วทันใจ"}
+          {lang === "ja" && "瞬時に"}
+        </>
+      ),
+      desc: (
+        <>
+          {lang === "en" && "Optimized for instant processing"}
+          {lang === "th" && "ไฟล์ถูกประมวลผลในเครื่อง ไม่เคยอัปโหลด"}
+          {lang === "ja" && "ファイルはローカルで処理され、アップロードされることはありません"}
+        </>
+      ),
       linear: "from-amber-400 to-orange-400"
     },
     {
       icon: Star,
-      title: "100% Free",
-      desc: "No limits, no watermarks, forever",
+      title: (
+        <>
+          {lang === "en" && "100% Free, No Limits, No Watermarks"}
+          {lang === "th" && "ฟรี 100% ไม่มีข้อจำกัด ไม่มีลายน้ำ"}
+          {lang === "ja" && "100%無料、制限なし、透かしなし"}
+        </>
+      ),
+      desc: (
+        <>
+          {lang === "en" && "No limits, no watermarks, forever"}
+          {lang === "th" && "ไม่มีข้อจำกัด ไม่มีลายน้ำ ตลอดไป"}
+          {lang === "ja" && "制限なし、透かしなし、永久に"}
+        </>
+      ),
       linear: "from-blue-400 to-cyan-400"
     },
     {
       icon: Globe,
-      title: "Multilingual",
-      desc: "Full support for 3+ languages",
+      title: (
+        <>
+          {lang === "en" && "Multilingual"}
+          {lang === "th" && "หลายภาษา"}
+          {lang === "ja" && "多言語対応"}
+        </>
+      ),
+      desc: (
+        <>
+          {lang === "en" && "Full support for 3+ languages"}
+          {lang === "th" && "รองรับภาษา 3 ภาษาขึ้นไป"}
+          {lang === "ja" && "3つ以上の言語を完全にサポート"}
+        </>
+      ),
       linear: "from-purple-400 to-pink-400"
     },
     {
       icon: Users,
-      title: "Trusted Globally",
-      desc: "Used by thousands worldwide",
+      title: (
+        <>
+          {lang === "en" && "Trusted Globally"}
+          {lang === "th" && "เชื่อถือได้ทั่วโลก"}
+          {lang === "ja" && "世界中で信頼"}
+        </>
+      ),
+      desc: (
+        <>
+          {lang === "en" && "Used by thousands worldwide"}
+          {lang === "th" && "ใช้งานโดยพันคนทั่วโลก"}
+          {lang === "ja" && "世界中の数千人によって使用"}
+        </>
+      ),
       linear: "from-rose-400 to-red-400"
     },
     {
       icon: CheckCircle,
-      title: "Easy to Use",
-      desc: "Intuitive design for everyone",
+      title: (
+        <>
+          {lang === "en" && "Easy to Use"}
+          {lang === "th" && "ใช้งานง่าย"}
+          {lang === "ja" && "使いやすい"}
+        </>
+      ),
+      desc: (
+        <>
+          {lang === "en" && "Intuitive design for everyone"}
+          {lang === "th" && "การออกแบบที่เข้าใจง่ายสำหรับทุกคน"}
+          {lang === "ja" && "誰もが使える直感的なデザイン"}
+        </>
+      ),
       linear: "from-indigo-400 to-violet-400"
     }
   ];
@@ -374,9 +446,15 @@ export default function PremiumLanding() {
         {/* Tools Grid */}
         <div className="mb-32">
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
-            Powerful Tools at Your
+            {lang === "en" && "Powerful Tools at Your"}
+            {lang === "th" && "เครื่องมือทรงพลังที่ปลาย"}
+            {lang === "ja" && "強力なツールがあなたの"}
+
             <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-blue-400">
-              {' '}Fingertips
+              {' '}
+              {lang === "en" && "Fingertips"}
+              {lang === "th" && "ปลายนิ้วของคุณ"}
+              {lang === "ja" && "指先に"}
             </span>
           </h2>
 
