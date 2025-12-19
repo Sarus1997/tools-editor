@@ -178,10 +178,42 @@ export default function PremiumLanding() {
   ];
 
   const stats = [
-    { value: "500K+", label: "Files Processed", icon: FileText, color: "from-blue-500 to-cyan-500" },
-    { value: "10K+", label: "Hours Saved", icon: Clock, color: "from-emerald-500 to-teal-500" },
-    { value: "50K+", label: "Happy Users", icon: Users, color: "from-purple-500 to-pink-500" },
-    { value: "150+", label: "Countries", icon: Globe, color: "from-amber-500 to-orange-500" }
+    {
+      value: "500K+", label: (
+        <>
+          {lang === "en" && "Files Processed"}
+          {lang === "th" && "ไฟล์ที่ถูกประมวลผล"}
+          {lang === "ja" && "処理されたファイル"}
+        </>
+      ), icon: FileText, color: "from-blue-500 to-cyan-500"
+    },
+    {
+      value: "10K+", label: (
+        <>
+          {lang === "en" && "Hours Saved"}
+          {lang === "th" && "ชั่วโมงที่ประหยัด"}
+          {lang === "ja" && "節約された時間"}
+        </>
+      ), icon: Clock, color: "from-emerald-500 to-teal-500"
+    },
+    {
+      value: "50K+", label: (
+        <>
+          {lang === "en" && "Happy Users"}
+          {lang === "th" && "ผู้ใช้ที่มีความสุข"}
+          {lang === "ja" && "満足したユーザー"}
+        </>
+      ), icon: Users, color: "from-purple-500 to-pink-500"
+    },
+    {
+      value: "150+", label: (
+        <>
+          {lang === "en" && "Countries"}
+          {lang === "th" && "ประเทศ"}
+          {lang === "ja" && "国"}
+        </>
+      ), icon: Globe, color: "from-amber-500 to-orange-500"
+    }
   ];
 
   const features = [
@@ -533,8 +565,14 @@ export default function PremiumLanding() {
         {/* Features Section */}
         <div className="mb-32">
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
-            Why Choose
-            <span className="text-transparent bg-clip-text bg-linear-to-r from-purple-400 to-pink-400"> Our Platform</span>
+            {lang === "en" && "Why Choose"}
+            {lang === "th" && "ทำไมต้องเลือก"}
+            {lang === "ja" && "なぜ私たちのプラットフォームを選ぶのか "}
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-purple-400 to-pink-400">
+              {lang === "en" && "Our Platform"}
+              {lang === "th" && "แพลตฟอร์มของเรา"}
+              {lang === "ja" && "私たちのプラットフォーム"}
+            </span>
           </h2>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
