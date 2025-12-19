@@ -31,7 +31,8 @@ const MENU_ITEMS = [
     th: "หน้าแรก",
     ja: "ホーム",
     icon: "🏠",
-    linear: "from-blue-500 to-cyan-500"
+    linear: "from-blue-500 to-cyan-500",
+    color: "blue"
   },
   {
     href: "/about",
@@ -39,7 +40,8 @@ const MENU_ITEMS = [
     th: "เกี่ยวกับ",
     ja: "概要",
     icon: "📖",
-    linear: "from-purple-500 to-pink-500"
+    linear: "from-purple-500 to-pink-500",
+    color: "purple"
   },
   {
     href: "/contact",
@@ -47,7 +49,8 @@ const MENU_ITEMS = [
     th: "ติดต่อ",
     ja: "お問い合わせ",
     icon: "📞",
-    linear: "from-orange-500 to-red-500"
+    linear: "from-orange-500 to-red-500",
+    color: "orange"
   },
   {
     href: "/features",
@@ -55,7 +58,8 @@ const MENU_ITEMS = [
     th: "ฟีเจอร์",
     ja: "特徴",
     icon: "✨",
-    linear: "from-green-500 to-emerald-500"
+    linear: "from-green-500 to-emerald-500",
+    color: "green"
   },
   {
     href: "/pricing",
@@ -63,7 +67,8 @@ const MENU_ITEMS = [
     th: "ราคา",
     ja: "料金",
     icon: "💰",
-    linear: "from-yellow-500 to-amber-500"
+    linear: "from-yellow-500 to-amber-500",
+    color: "yellow"
   },
   {
     href: "/tools",
@@ -71,7 +76,8 @@ const MENU_ITEMS = [
     th: "เครื่องมือ",
     ja: "ツール",
     icon: "🛠️",
-    linear: "from-indigo-500 to-blue-500"
+    linear: "from-indigo-500 to-violet-500",
+    color: "indigo"
   }
 ];
 
@@ -82,7 +88,6 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
   const sidebarRef = useRef<HTMLDivElement>(null);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
-  // Close sidebar on escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape" && open) onClose();
@@ -91,7 +96,6 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
     return () => document.removeEventListener("keydown", handleEscape);
   }, [open, onClose]);
 
-  // Prevent body scroll when sidebar is open
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
@@ -109,27 +113,28 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
 
   return (
     <>
-      {/* Overlay with animated linear */}
+      {/* Premium Overlay with Blur */}
       <div
-        className={`fixed inset-0 z-50 transition-all duration-700 ease-in-out ${open
-          ? "visible opacity-100 backdrop-blur-md"
+        className={`fixed inset-0 z-50 transition-all duration-700 ${open
+          ? "visible opacity-100 backdrop-blur-xl"
           : "invisible opacity-0 backdrop-blur-0"
           }`}
         onClick={onClose}
       >
-        {/* Animated linear background */}
-        <div className="absolute inset-0 bg-linear-to-br from-indigo-900/20 via-purple-900/20 to-pink-900/20"></div>
+        <div className="absolute inset-0 bg-linear-to-br from-indigo-900/30 via-purple-900/30 to-pink-900/30"></div>
 
-        {/* Floating particles */}
-        {[...Array(15)].map((_, i) => (
+        {/* Enhanced Floating Particles */}
+        {open && [...Array(20)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-2 h-2 rounded-full bg-linear-to-r from-indigo-400/40 to-purple-400/40"
+            className="absolute rounded-full bg-linear-to-r from-indigo-400/30 to-purple-400/30 shadow-lg shadow-indigo-500/20"
             style={{
+              width: `${Math.random() * 8 + 2}px`,
+              height: `${Math.random() * 8 + 2}px`,
               top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
-              animation: `float ${3 + Math.random() * 7}s infinite ease-in-out`,
-              animationDelay: `${Math.random() * 2}s`,
+              animation: `float-particle ${4 + Math.random() * 8}s infinite ease-in-out`,
+              animationDelay: `${Math.random() * 3}s`,
             }}
           ></div>
         ))}
@@ -141,102 +146,108 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
           }`}
         ref={sidebarRef}
       >
-        {/* Sidebar with glass morphism effect */}
-        <aside
-          className="relative h-full w-full overflow-hidden"
-          style={{
-            background: theme === "light"
-              ? "linear-linear(145deg, rgba(255,255,255,0.95) 0%, rgba(248,250,252,0.95) 100%)"
-              : "linear-linear(145deg, rgba(15,15,20,0.95) 0%, rgba(9,9,12,0.95) 100%)",
-            backdropFilter: "blur(20px)",
-          }}
-        >
-          {/* Decorative linear border */}
-          <div className="absolute inset-0 bg-linear-to-br from-indigo-500/10 via-purple-500/10 to-pink-500/10 pointer-events-none"></div>
+        <aside className="relative h-full w-full overflow-hidden bg-white/95 dark:bg-zinc-900/95 backdrop-blur-2xl shadow-2xl">
+          {/* Animated Background Effects */}
+          <div className="absolute inset-0 bg-linear-to-br from-indigo-500/5 via-purple-500/5 to-pink-500/5 pointer-events-none"></div>
 
-          {/* Animated floating orbs */}
-          <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-linear-to-r from-indigo-500/20 to-purple-500/20 blur-3xl"></div>
-          <div className="absolute -bottom-20 -left-20 w-40 h-40 rounded-full bg-linear-to-r from-pink-500/20 to-orange-500/20 blur-3xl"></div>
+          {/* Floating Orbs */}
+          <div className="absolute -top-24 -right-24 w-48 h-48 rounded-full bg-linear-to-r from-indigo-500/20 to-purple-500/20 blur-3xl animate-float-slow"></div>
+          <div className="absolute -bottom-24 -left-24 w-48 h-48 rounded-full bg-linear-to-r from-pink-500/20 to-orange-500/20 blur-3xl animate-float-delayed"></div>
 
-          {/* Header section */}
-          <div className="relative z-10 p-8 border-b border-white/10 dark:border-zinc-800/50">
+          {/* Header Section */}
+          <div className="relative z-10 p-6 border-b border-zinc-200/50 dark:border-zinc-800/50">
             <div className="flex items-center justify-between mb-6">
-              {/* Logo with animation */}
-              <div className="flex items-center gap-3">
+              {/* Logo */}
+              <Link href="/" onClick={onClose} className="flex items-center gap-3 group">
                 <div className="relative">
-                  <div className="absolute -inset-4 bg-linear-to-r from-indigo-500 to-purple-600 rounded-full blur-xl opacity-50 animate-pulse-slow"></div>
-                  <div className="relative w-14 h-14 rounded-2xl bg-linear-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-2xl transform hover:rotate-12 transition-transform duration-500">
-                    <span className="text-3xl">📄</span>
+                  <div className="absolute -inset-4 bg-linear-to-r from-indigo-500 to-purple-600 rounded-2xl blur-xl opacity-40 group-hover:opacity-60 transition-all duration-500"></div>
+                  <div className="relative w-14 h-14 rounded-2xl bg-linear-to-br from-indigo-500 via-purple-500 to-pink-600 flex items-center justify-center shadow-2xl shadow-indigo-500/50 transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
+                    <div className="absolute inset-0 bg-white/20 rounded-2xl"></div>
+                    <span className="text-3xl relative z-10">📄</span>
                   </div>
+                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-linear-to-r from-green-400 to-emerald-500 rounded-full shadow-lg shadow-green-500/50 animate-pulse"></div>
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold bg-linear-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-linear">
+                  <h2 className="text-2xl font-black bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
                     PDF EDITOR
                   </h2>
-                  <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
-                    {lang === "en" && "Professional Tools"}
-                    {lang === "th" && "เครื่องมือระดับมืออาชีพ"}
-                    {lang === "ja" && "プロフェッショナルツール"}
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400 font-semibold tracking-wider uppercase mt-0.5">
+                    {lang === "en" && "Professional Suite"}
+                    {lang === "th" && "ชุดเครื่องมือมืออาชีพ"}
+                    {lang === "ja" && "プロフェッショナル"}
                   </p>
                 </div>
-              </div>
+              </Link>
 
-              {/* Close button with animation */}
+              {/* Close Button */}
               <button
                 onClick={onClose}
-                className="relative group w-12 h-12 rounded-2xl flex items-center justify-center"
+                className="relative group w-12 h-12 rounded-2xl flex items-center justify-center overflow-hidden transition-all duration-300 hover:scale-105"
                 aria-label="Close menu"
               >
-                <div className="absolute inset-0 bg-linear-to-r from-red-500/0 to-orange-500/0 group-hover:from-red-500/20 group-hover:to-orange-500/20 rounded-2xl transition-all duration-300"></div>
-                <div className="relative z-10 text-2xl transform transition-all duration-300 group-hover:rotate-90 group-hover:scale-110">
-                  <span className="text-red-500 group-hover:text-red-400">✕</span>
-                </div>
+                <div className="absolute inset-0 bg-linear-to-r from-red-500/0 to-rose-500/0 group-hover:from-red-500/20 group-hover:to-rose-500/20 transition-all duration-500"></div>
+                <div className="absolute inset-0 border border-zinc-200 dark:border-zinc-700 rounded-2xl group-hover:border-red-500/50 transition-all duration-300"></div>
+                <span className="relative z-10 text-2xl text-red-500 dark:text-red-400 transform transition-all duration-500 group-hover:rotate-90 group-hover:scale-110">✕</span>
               </button>
             </div>
 
-            {/* User info card */}
-            <div className="relative overflow-hidden rounded-2xl p-4 bg-linear-to-r from-white/50 to-white/30 dark:from-zinc-800/50 dark:to-zinc-800/30 backdrop-blur-sm border border-white/20 dark:border-zinc-700/30">
-              <div className="flex items-center gap-3">
+            {/* Premium User Card */}
+            <div className="relative overflow-hidden rounded-2xl p-4 bg-linear-to-br from-white/60 to-zinc-50/60 dark:from-zinc-800/60 dark:to-zinc-900/60 backdrop-blur-sm border border-zinc-200/50 dark:border-zinc-700/50 shadow-xl">
+              <div className="absolute inset-0 bg-linear-to-r from-indigo-500/5 via-purple-500/5 to-pink-500/5"></div>
+              <div className="relative flex items-center gap-3">
                 <div className="relative">
-                  <div className="absolute -inset-2 bg-linear-to-r from-cyan-500 to-blue-500 rounded-full blur opacity-30"></div>
-                  <div className="relative w-12 h-12 rounded-xl bg-linear-to-br from-cyan-400 to-blue-500 flex items-center justify-center">
-                    <span className="text-xl">👤</span>
+                  <div className="absolute -inset-2 bg-linear-to-r from-cyan-400 to-blue-500 rounded-xl blur-md opacity-40"></div>
+                  <div className="relative w-12 h-12 rounded-xl bg-linear-to-br from-cyan-400 to-blue-500 flex items-center justify-center shadow-lg shadow-cyan-500/30">
+                    <span className="text-2xl">👤</span>
                   </div>
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-zinc-800 dark:text-zinc-200">
+                  <h3 className="font-bold text-zinc-800 dark:text-zinc-100">
                     {lang === "en" && "Welcome Back!"}
-                    {lang === "th" && "ยินดีต้อนรับ!"}
+                    {lang === "th" && "ยินดีต้อนรับกลับ!"}
                     {lang === "ja" && "おかえりなさい！"}
                   </h3>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                  <p className="text-xs text-zinc-600 dark:text-zinc-400 font-medium">
                     {lang === "en" && "Premium Member"}
-                    {lang === "th" && "สมาชิกระดับพรีเมียม"}
+                    {lang === "th" && "สมาชิกพรีเมียม"}
                     {lang === "ja" && "プレミアムメンバー"}
                   </p>
                 </div>
-                <div className="px-3 py-1 rounded-full bg-linear-to-r from-emerald-500 to-green-500 text-white text-xs font-semibold">
-                  PRO
+                <div className="relative px-3 py-1.5 rounded-full overflow-hidden">
+                  <div className="absolute inset-0 bg-linear-to-r from-emerald-500 to-green-500 animate-linear-x"></div>
+                  <span className="relative z-10 text-white text-xs font-bold tracking-wide">PRO</span>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Navigation Menu */}
-          <div className="relative z-10 p-6 overflow-y-auto h-[calc(100vh-280px)]">
-            <h3 className="text-xs uppercase tracking-wider text-zinc-500 dark:text-zinc-400 font-semibold mb-4 px-2">
-              {lang === "en" && "NAVIGATION"}
-              {lang === "th" && "เมนูนำทาง"}
-              {lang === "ja" && "ナビゲーション"}
-            </h3>
+          <div className="relative z-10 px-4 py-6 overflow-y-auto h-[calc(100vh-340px)] custom-scrollbar">
+            <div className="flex items-center justify-between mb-4 px-2">
+              <h3 className="text-[10px] uppercase tracking-widest text-zinc-500 dark:text-zinc-400 font-bold">
+                {lang === "en" && "Navigation"}
+                {lang === "th" && "เมนูนำทาง"}
+                {lang === "ja" && "ナビゲーション"}
+              </h3>
+              <div className="flex gap-1">
+                <div className="w-1.5 h-1.5 rounded-full bg-linear-to-r from-indigo-500 to-purple-500"></div>
+                <div className="w-1.5 h-1.5 rounded-full bg-linear-to-r from-purple-500 to-pink-500"></div>
+                <div className="w-1.5 h-1.5 rounded-full bg-linear-to-r from-pink-500 to-rose-500"></div>
+              </div>
+            </div>
 
             <ul className="space-y-2">
-              {MENU_ITEMS.map((item) => {
+              {MENU_ITEMS.map((item, idx) => {
                 const isActive = activeMenu === item.href;
                 const isHovered = hoveredItem === item.href;
 
                 return (
-                  <li key={item.href}>
+                  <li
+                    key={item.href}
+                    style={{
+                      animation: open ? `slide-in 0.5s ease-out ${idx * 0.05}s both` : 'none'
+                    }}
+                  >
                     <Link
                       href={item.href}
                       onClick={() => {
@@ -245,50 +256,64 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
                       }}
                       onMouseEnter={() => setHoveredItem(item.href)}
                       onMouseLeave={() => setHoveredItem(null)}
-                      className={`relative flex items-center gap-4 px-4 py-4 rounded-2xl transition-all duration-300 group ${isActive
-                        ? "shadow-lg transform scale-[1.02]"
-                        : "hover:shadow-md"
+                      className={`relative flex items-center gap-4 px-4 py-4 rounded-2xl transition-all duration-500 group ${isActive
+                        ? "shadow-xl shadow-indigo-500/20 transform scale-[1.02]"
+                        : "hover:shadow-lg hover:scale-[1.01]"
                         }`}
                     >
-                      {/* Background linear effect */}
-                      <div className={`absolute inset-0 rounded-2xl bg-linear-to-r ${item.linear} opacity-0 group-hover:opacity-10 transition-opacity duration-300 ${isActive ? 'opacity-10' : ''}`}></div>
+                      {/* Background Effects */}
+                      <div className={`absolute inset-0 rounded-2xl bg-linear-to-r ${item.linear} transition-opacity duration-500 ${isActive ? 'opacity-10' : 'opacity-0 group-hover:opacity-5'
+                        }`}></div>
 
-                      {/* Icon container */}
-                      <div className={`relative w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 ${isActive
-                        ? `bg-linear-to-br ${item.linear} shadow-lg`
-                        : 'bg-white/50 dark:bg-zinc-800/50 group-hover:bg-white/80 dark:group-hover:bg-zinc-700/80'
-                        }`}>
-                        <span className={`text-xl transition-transform duration-300 group-hover:scale-110 ${isActive ? 'text-white' : ''
+                      {isActive && (
+                        <div className={`absolute inset-0 rounded-2xl bg-linear-to-r ${item.linear} opacity-5 animate-pulse`}></div>
+                      )}
+
+                      {/* Icon Container */}
+                      <div className="relative">
+                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500 ${isActive
+                          ? `bg-linear-to-br ${item.linear} shadow-lg shadow-${item.color}-500/50`
+                          : 'bg-white/60 dark:bg-zinc-800/60 backdrop-blur-sm group-hover:bg-white/80 dark:group-hover:bg-zinc-700/80'
                           }`}>
-                          {item.icon}
-                        </span>
-                        {/* Active indicator */}
+                          <span className={`text-2xl transition-all duration-500 ${isActive ? 'scale-110 drop-shadow-lg' : 'group-hover:scale-110'
+                            }`}>
+                            {item.icon}
+                          </span>
+                        </div>
+
+                        {/* Active Indicator */}
                         {isActive && (
-                          <div className="absolute -right-1 -top-1 w-3 h-3 rounded-full bg-linear-to-r from-green-400 to-emerald-500 ring-2 ring-white dark:ring-zinc-900"></div>
+                          <>
+                            <div className="absolute -right-1 -top-1 w-3 h-3 rounded-full bg-linear-to-r from-green-400 to-emerald-500 ring-2 ring-white dark:ring-zinc-900 animate-pulse"></div>
+                            <div className="absolute -right-1 -top-1 w-3 h-3 rounded-full bg-linear-to-r from-green-400 to-emerald-500 animate-ping"></div>
+                          </>
                         )}
                       </div>
 
-                      {/* Text */}
-                      <div className="flex-1">
-                        <span className={`font-medium transition-colors duration-300 ${isActive
+                      {/* Text Content */}
+                      <div className="flex-1 min-w-0">
+                        <span className={`block font-bold text-sm transition-all duration-300 ${isActive
                           ? 'bg-linear-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent'
                           : 'text-zinc-700 dark:text-zinc-300'
                           }`}>
                           {getLabel(item)}
                         </span>
-                        <div className="h-1 w-0 group-hover:w-full bg-linear-to-r from-transparent via-current to-transparent transition-all duration-500 mt-1 opacity-50"></div>
+                        <div className={`h-0.5 mt-1.5 rounded-full bg-linear-to-r ${item.linear} transition-all duration-500 ${isHovered ? 'w-full opacity-50' : 'w-0 opacity-0'
+                          }`}></div>
                       </div>
 
-                      {/* Arrow indicator */}
-                      <div className={`transition-transform duration-300 ${isHovered ? 'translate-x-1' : ''
+                      {/* Arrow */}
+                      <div className={`transform transition-all duration-500 ${isHovered ? 'translate-x-1 scale-110' : ''
                         }`}>
                         <svg
-                          className={`w-5 h-5 ${isActive ? 'text-purple-500' : 'text-zinc-400'}`}
+                          className={`w-5 h-5 transition-colors duration-300 ${isActive ? 'text-purple-500' : 'text-zinc-400'
+                            }`}
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
+                          strokeWidth={2.5}
                         >
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                         </svg>
                       </div>
                     </Link>
@@ -297,36 +322,44 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
               })}
             </ul>
 
-            {/* Divider */}
+            {/* Elegant Divider */}
             <div className="my-8 relative">
               <div className="h-px bg-linear-to-r from-transparent via-zinc-300 dark:via-zinc-700 to-transparent"></div>
-              <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 px-4 bg-white dark:bg-zinc-900 text-xs text-zinc-500">
-                {lang === "en" && "SETTINGS"}
-                {lang === "th" && "การตั้งค่า"}
-                {lang === "ja" && "設定"}
+              <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 px-4 bg-white dark:bg-zinc-900">
+                <span className="text-[10px] font-bold text-zinc-500 tracking-widest uppercase">
+                  {lang === "en" && "Settings"}
+                  {lang === "th" && "การตั้งค่า"}
+                  {lang === "ja" && "設定"}
+                </span>
               </div>
             </div>
 
             {/* Settings Section */}
             <div className="space-y-4">
               {/* Language Selector */}
-              <div className="bg-white/30 dark:bg-zinc-800/30 backdrop-blur-sm rounded-2xl p-4 border border-white/20 dark:border-zinc-700/30">
-                <h4 className="text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-3">
+              <div className="relative overflow-hidden rounded-2xl p-4 bg-white/60 dark:bg-zinc-800/60 backdrop-blur-sm border border-zinc-200/50 dark:border-zinc-700/50 shadow-lg">
+                <div className="absolute inset-0 bg-linear-to-br from-indigo-500/5 to-purple-500/5"></div>
+                <h4 className="relative text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-3 flex items-center gap-2">
+                  <span>🌍</span>
                   {lang === "en" && "Language"}
                   {lang === "th" && "ภาษา"}
                   {lang === "ja" && "言語"}
                 </h4>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="relative grid grid-cols-3 gap-2">
                   {(Object.keys(LANG_LABEL) as Lang[]).map((l) => (
                     <button
                       key={l}
                       onClick={() => setLang(l)}
-                      className={`flex flex-col items-center justify-center p-3 rounded-xl transition-all duration-300 ${lang === l
-                        ? "bg-linear-to-br from-indigo-500 to-purple-600 shadow-lg transform scale-105"
-                        : "bg-white/50 dark:bg-zinc-800/50 hover:bg-white/80 dark:hover:bg-zinc-700/80"
+                      className={`relative flex flex-col items-center justify-center p-3 rounded-xl transition-all duration-500 overflow-hidden ${lang === l
+                        ? "bg-linear-to-br from-indigo-500 to-purple-600 shadow-lg shadow-indigo-500/30 transform scale-105"
+                        : "bg-white/60 dark:bg-zinc-800/60 hover:bg-white/80 dark:hover:bg-zinc-700/80 hover:scale-105"
                         }`}
                     >
-                      <div className={`w-10 h-7 rounded overflow-hidden mb-2 ${lang === l ? 'ring-2 ring-white/50' : ''}`}>
+                      {lang === l && (
+                        <div className="absolute inset-0 bg-white/10 animate-pulse"></div>
+                      )}
+                      <div className={`relative w-10 h-7 rounded-md overflow-hidden mb-2 shadow-md transition-all duration-300 ${lang === l ? 'ring-2 ring-white/50 scale-110' : ''
+                        }`}>
                         <Image
                           src={LANG_FLAG[l]}
                           alt={l}
@@ -335,8 +368,9 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
                           className="object-cover w-full h-full"
                         />
                       </div>
-                      <span className={`text-xs font-medium ${lang === l ? 'text-white' : 'text-zinc-600 dark:text-zinc-400'}`}>
-                        {LANG_LABEL[l]}
+                      <span className={`text-[10px] font-bold transition-colors duration-300 ${lang === l ? 'text-white' : 'text-zinc-600 dark:text-zinc-400'
+                        }`}>
+                        {l.toUpperCase()}
                       </span>
                     </button>
                   ))}
@@ -344,44 +378,46 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
               </div>
 
               {/* Theme Toggle */}
-              <div className="bg-white/30 dark:bg-zinc-800/30 backdrop-blur-sm rounded-2xl p-4 border border-white/20 dark:border-zinc-700/30">
-                <h4 className="text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-3">
-                  {lang === "en" && "Theme"}
+              <div className="relative overflow-hidden rounded-2xl p-4 bg-white/60 dark:bg-zinc-800/60 backdrop-blur-sm border border-zinc-200/50 dark:border-zinc-700/50 shadow-lg">
+                <div className="absolute inset-0 bg-linear-to-br from-amber-500/5 to-orange-500/5 dark:from-indigo-500/5 dark:to-purple-500/5"></div>
+                <h4 className="relative text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-3 flex items-center gap-2">
+                  <span>{theme === "light" ? "☀️" : "🌙"}</span>
+                  {lang === "en" && "Appearance"}
                   {lang === "th" && "ธีม"}
                   {lang === "ja" && "テーマ"}
                 </h4>
                 <button
                   onClick={toggleTheme}
-                  className="relative w-full overflow-hidden rounded-xl group"
+                  className="relative w-full overflow-hidden rounded-xl group transition-all duration-500 hover:scale-[1.02]"
                 >
-                  <div className="absolute inset-0 bg-linear-to-r from-amber-400/0 to-orange-500/0 group-hover:from-amber-400/20 group-hover:to-orange-500/20 transition-all duration-500"></div>
+                  <div className="absolute inset-0 bg-linear-to-r from-amber-400/0 to-orange-500/0 dark:from-indigo-400/0 dark:to-purple-500/0 group-hover:from-amber-400/10 group-hover:to-orange-500/10 dark:group-hover:from-indigo-400/10 dark:group-hover:to-purple-500/10 transition-all duration-500"></div>
                   <div className="relative z-10 flex items-center justify-between p-4">
                     <div className="flex items-center gap-3">
-                      <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${theme === "light"
-                        ? "bg-linear-to-br from-amber-400 to-orange-500"
-                        : "bg-linear-to-br from-indigo-600 to-purple-700"
+                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center shadow-lg transition-all duration-500 ${theme === "light"
+                        ? "bg-linear-to-br from-amber-400 to-orange-500 shadow-amber-500/50"
+                        : "bg-linear-to-br from-indigo-600 to-purple-700 shadow-indigo-500/50"
                         }`}>
-                        <span className="text-2xl">
+                        <span className="text-2xl drop-shadow-lg">
                           {theme === "light" ? "☀️" : "🌙"}
                         </span>
                       </div>
                       <div>
-                        <div className="font-medium text-zinc-800 dark:text-zinc-200">
+                        <div className="font-bold text-sm text-zinc-800 dark:text-zinc-200">
                           {theme === "light"
-                            ? (lang === "en" ? "Light Mode" : lang === "th" ? "โหมดสว่าง" : "ライトモード")
-                            : (lang === "en" ? "Dark Mode" : lang === "th" ? "โหมดมืด" : "ダークモード")
+                            ? (lang === "en" ? "Light Mode" : lang === "th" ? "โหมดสว่าง" : "ライト")
+                            : (lang === "en" ? "Dark Mode" : lang === "th" ? "โหมดมืด" : "ダーク")
                           }
                         </div>
                         <div className="text-xs text-zinc-600 dark:text-zinc-400">
                           {theme === "light"
-                            ? (lang === "en" ? "Switch to dark theme" : lang === "th" ? "เปลี่ยนเป็นธีมมืด" : "ダークテーマに切り替え")
-                            : (lang === "en" ? "Switch to light theme" : lang === "th" ? "เปลี่ยนเป็นธีมสว่าง" : "ライトテーマに切り替え")
+                            ? (lang === "en" ? "Switch to dark" : lang === "th" ? "เปลี่ยนเป็นมืด" : "ダークに変更")
+                            : (lang === "en" ? "Switch to light" : lang === "th" ? "เปลี่ยนเป็นสว่าง" : "ライトに変更")
                           }
                         </div>
                       </div>
                     </div>
-                    <div className="relative w-14 h-8 rounded-full bg-linear-to-r from-zinc-300 to-zinc-400 dark:from-zinc-700 dark:to-zinc-800 p-1">
-                      <div className={`w-6 h-6 rounded-full bg-white shadow-lg transform transition-transform duration-500 ${theme === "dark" ? "translate-x-6" : ""
+                    <div className="relative w-14 h-7 rounded-full bg-linear-to-r from-zinc-300 to-zinc-400 dark:from-zinc-700 dark:to-zinc-800 p-0.5 shadow-inner">
+                      <div className={`w-6 h-6 rounded-full bg-white shadow-lg transform transition-all duration-500 ${theme === "dark" ? "translate-x-7 bg-linear-to-br from-indigo-400 to-purple-500" : "bg-linear-to-br from-amber-400 to-orange-500"
                         }`}></div>
                     </div>
                   </div>
@@ -390,19 +426,19 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
             </div>
           </div>
 
-          {/* Footer */}
-          <div className="absolute bottom-0 left-0 right-0 z-10 p-6 border-t border-white/10 dark:border-zinc-800/50">
+          {/* Premium Footer */}
+          <div className="absolute bottom-0 left-0 right-0 z-10 p-6 border-t border-zinc-200/50 dark:border-zinc-800/50 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm">
             <div className="text-center">
               <div className="flex items-center justify-center gap-2 mb-3">
-                <div className="w-2 h-2 rounded-full bg-linear-to-r from-green-400 to-emerald-500"></div>
-                <div className="w-2 h-2 rounded-full bg-linear-to-r from-blue-400 to-cyan-500"></div>
-                <div className="w-2 h-2 rounded-full bg-linear-to-r from-purple-400 to-pink-500"></div>
+                <div className="w-2 h-2 rounded-full bg-linear-to-r from-green-400 to-emerald-500 animate-pulse"></div>
+                <div className="w-2 h-2 rounded-full bg-linear-to-r from-blue-400 to-cyan-500 animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                <div className="w-2 h-2 rounded-full bg-linear-to-r from-purple-400 to-pink-500 animate-pulse" style={{ animationDelay: '0.4s' }}></div>
               </div>
-              <div className="text-sm font-bold bg-linear-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-1">
+              <div className="text-sm font-black bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent mb-1">
                 ITD TEAM ⚒️
               </div>
-              <div className="text-xs text-zinc-500 dark:text-zinc-400">
-                v1.1.1 • {lang === "en" ? "Premium Edition" : lang === "th" ? "รุ่นพรีเมียม" : "プレミアム版"}
+              <div className="text-xs text-zinc-500 dark:text-zinc-400 font-semibold">
+                v1.2.0 • {lang === "en" ? "Premium Edition" : lang === "th" ? "รุ่นพรีเมียม" : "プレミアム版"}
               </div>
             </div>
           </div>
@@ -410,51 +446,85 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
       </div>
 
       <style jsx global>{`
-        @keyframes linear {
-          0% { background-position: 0% 50%; }
+        @keyframes float-particle {
+          0%, 100% { 
+            transform: translateY(0) translateX(0) rotate(0deg); 
+            opacity: 0.2;
+          }
+          25% { 
+            transform: translateY(-20px) translateX(10px) rotate(90deg); 
+            opacity: 0.6;
+          }
+          50% { 
+            transform: translateY(-10px) translateX(-10px) rotate(180deg); 
+            opacity: 0.8;
+          }
+          75% { 
+            transform: translateY(-30px) translateX(5px) rotate(270deg); 
+            opacity: 0.4;
+          }
+        }
+        
+        @keyframes float-slow {
+          0%, 100% { transform: translateY(0) translateX(0); }
+          50% { transform: translateY(-20px) translateX(-10px); }
+        }
+        
+        @keyframes float-delayed {
+          0%, 100% { transform: translateY(0) translateX(0); }
+          50% { transform: translateY(-15px) translateX(15px); }
+        }
+        
+        @keyframes linear-x {
+          0%, 100% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
         }
         
-        @keyframes float {
-          0%, 100% { transform: translateY(0) rotate(0deg); }
-          50% { transform: translateY(-10px) rotate(180deg); }
+        @keyframes slide-in {
+          from { 
+            opacity: 0; 
+            transform: translateX(-20px); 
+          }
+          to { 
+            opacity: 1; 
+            transform: translateX(0); 
+          }
         }
         
-        @keyframes pulse-slow {
-          0%, 100% { opacity: 0.5; }
-          50% { opacity: 0.8; }
+        .animate-float-slow {
+          animation: float-slow 8s ease-in-out infinite;
         }
         
-        .animate-linear {
-          animation: linear 3s ease infinite;
+        .animate-float-delayed {
+          animation: float-delayed 10s ease-in-out infinite;
+          animation-delay: 1s;
+        }
+        
+        .animate-linear-x {
+          animation: linear-x 3s ease infinite;
           background-size: 200% 200%;
         }
         
-        .animate-pulse-slow {
-          animation: pulse-slow 3s ease-in-out infinite;
-        }
-        
-        /* Custom scrollbar */
-        .overflow-y-auto {
+        /* Custom Scrollbar */
+        .custom-scrollbar {
           scrollbar-width: thin;
-          scrollbar-color: rgba(99, 102, 241, 0.5) transparent;
+          scrollbar-color: rgba(139, 92, 246, 0.5) transparent;
         }
         
-        .overflow-y-auto::-webkit-scrollbar {
+        .custom-scrollbar::-webkit-scrollbar {
           width: 6px;
         }
         
-        .overflow-y-auto::-webkit-scrollbar-track {
+        .custom-scrollbar::-webkit-scrollbar-track {
           background: transparent;
         }
         
-        .overflow-y-auto::-webkit-scrollbar-thumb {
+        .custom-scrollbar::-webkit-scrollbar-thumb {
           background: linear-linear(to bottom, #8b5cf6, #ec4899);
-          border-radius: 3px;
+          border-radius: 10px;
         }
         
-        .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
           background: linear-linear(to bottom, #7c3aed, #db2777);
         }
       `}</style>

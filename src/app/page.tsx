@@ -1,519 +1,503 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
+/* eslint-disable react-hooks/purity */
 
-import Link from "next/link";
+'use client';
+
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import {
-  FileEdit,
-  Scissors,
-  FileDown,
-  FileUp,
-  FileSearch,
-  FileText,
-  Sparkles,
-  Zap,
-  Shield,
-  Globe,
-  Clock,
-  CheckCircle,
-  Users,
-  Star,
-} from "lucide-react";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { useLanguage } from "@/contexts/LanguageContext";
-import { ReactNode, useEffect, useState } from "react";
-import Particles from "@/components/ui/Particles";
+  FileEdit, Scissors, FileDown, FileUp, FileSearch, FileText,
+  Sparkles, Zap, Shield, Globe, Clock, CheckCircle, Users, Star,
+  ArrowRight, TrendingUp
+} from 'lucide-react';
+import { useLanguage } from "../contexts/LanguageContext";
 
-
-type Lang = "en" | "th" | "ja";
-
-export default function HomePage() {
-  const { lang } = useLanguage();
-  const { scrollY } = useScroll();
+export default function PremiumLanding() {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [currentStat, setCurrentStat] = useState(0);
+  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
 
-  const t = {
-    en: {
-      title: "Professional PDF Tools",
-      subtitle: "Transform, edit, and manage your PDFs with ease",
-      merge: "Merge PDF",
-      mergeDesc: "Combine multiple PDF files into one seamless document",
-      compress: "Compress PDF",
-      compressDesc: "Reduce PDF size without compromising quality",
-      edit: "Edit PDF",
-      editDesc: "Modify text, images, and pages effortlessly",
-      comingSplit: "Split PDF",
-      comingSplitDesc: "Divide large PDFs into smaller files (Coming Soon)",
-      comingExtract: "Extract Text",
-      comingExtractDesc: "Extract text and data from PDFs (Coming Soon)",
-      comingImage: "PDF to Images",
-      comingImageDesc: "Convert PDF pages to high-quality images (Coming Soon)",
-      comingSearch: "Search in PDF",
-      comingSearchDesc: "Advanced search and OCR capabilities (Coming Soon)",
-      featuresTitle: "Why Choose Our Tools",
-      secure: "Secure & Private",
-      secureDesc: "Files are processed locally, never uploaded to servers",
-      fast: "Lightning Fast",
-      fastDesc: "Optimized algorithms for quick processing",
-      free: "100% Free",
-      freeDesc: "No subscriptions, no limits, no watermarks",
-      global: "Multilingual",
-      globalDesc: "Fully supports English, Thai, and Japanese",
-      trusted: "Trusted by Thousands",
-      trustedDesc: "Users worldwide rely on our tools daily",
-      statsTitle: "Our Impact",
-      filesProcessed: "Files Processed",
-      timeSaved: "Hours Saved",
-      happyUsers: "Happy Users",
-      countries: "Countries",
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentStat((prev) => (prev + 1) % 4);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Detect theme from context or system
+  useEffect(() => {
+    const checkTheme = () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      setTheme(isDark ? 'dark' : 'light');
+    };
+
+    checkTheme();
+    const observer = new MutationObserver(checkTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+
+  const { lang } = useLanguage();
+  const tools = [
+    {
+      id: 1,
+      icon: FileEdit,
+      title: (
+        <>
+          {lang === "en" && "Merge Tools"}
+          {lang === "th" && "เครื่องมือผสาน"}
+          {lang === "ja" && "マージツール"}
+        </>
+      ),
+      desc: (
+        <>
+          {lang === "en" && "Combine multiple PDF files into one seamless document"}
+          {lang === "th" && "รวมไฟล์ PDF หลายไฟล์เป็นเอกสารเดียว"}
+          {lang === "ja" && "複数のPDFファイルを1つのシームレスな文書に結合"}
+        </>
+      ),
+      linear: "from-blue-500 via-cyan-500 to-teal-400",
+      href: "/merger",
+      active: true
     },
-    th: {
-      title: "เครื่องมือ PDF ระดับมืออาชีพ",
-      subtitle: "แปลง แก้ไข และจัดการไฟล์ PDF ของคุณได้อย่างง่ายดาย",
-      merge: "รวม PDF",
-      mergeDesc: "รวมไฟล์ PDF หลายไฟล์เป็นเอกสารเดียวที่สมบูรณ์",
-      compress: "บีบอัด PDF",
-      compressDesc: "ลดขนาดไฟล์ PDF โดยไม่ลดคุณภาพ",
-      edit: "แก้ไข PDF",
-      editDesc: "แก้ไขข้อความ รูปภาพ และหน้าอย่างง่ายดาย",
-      comingSplit: "แยก PDF",
-      comingSplitDesc: "แบ่งไฟล์ PDF ขนาดใหญ่เป็นไฟล์เล็กๆ (เร็วๆ นี้)",
-      comingExtract: "แยกข้อความ",
-      comingExtractDesc: "ดึงข้อความและข้อมูลจากไฟล์ PDF (เร็วๆ นี้)",
-      comingImage: "PDF เป็นรูปภาพ",
-      comingImageDesc: "แปลงหน้า PDF เป็นภาพคุณภาพสูง (เร็วๆ นี้)",
-      comingSearch: "ค้นหาใน PDF",
-      comingSearchDesc: "ความสามารถในการค้นหาและ OCR ขั้นสูง (เร็วๆ นี้)",
-      featuresTitle: "ทำไมต้องเลือกเครื่องมือของเรา",
-      secure: "ปลอดภัย & เป็นส่วนตัว",
-      secureDesc: "ประมวลผลไฟล์ในเครื่อง ไม่มีการอัพโหลดไปยังเซิร์ฟเวอร์",
-      fast: "เร็วสุดๆ",
-      fastDesc: "อัลกอริทึมที่ปรับปรุงเพื่อการประมวลผลที่รวดเร็ว",
-      free: "ฟรี 100%",
-      freeDesc: "ไม่มีค่าสมัครสมาชิก ไม่มีขีดจำกัด ไม่มีลายน้ำ",
-      global: "หลายภาษา",
-      globalDesc: "รองรับภาษาอังกฤษ ไทย และญี่ปุ่นอย่างเต็มที่",
-      trusted: "ได้รับความไว้วางใจจากหลายพันคน",
-      trustedDesc: "ผู้ใช้ทั่วโลกไว้วางใจเครื่องมือของเราทุกวัน",
-      statsTitle: "ผลกระทบของเรา",
-      filesProcessed: "ไฟล์ที่ประมวลผล",
-      timeSaved: "ชั่วโมงที่ประหยัดได้",
-      happyUsers: "ผู้ใช้ที่พึงพอใจ",
-      countries: "ประเทศ",
+    {
+      id: 2,
+      icon: FileDown,
+      title: (
+        <>
+          {lang === "en" && "Compress PDF"}
+          {lang === "th" && "บีบอัด PDF"}
+          {lang === "ja" && "PDFを圧縮"}
+        </>
+      ),
+      desc: (
+        <>
+          {lang === "en" && "Reduce PDF size without compromising quality"}
+          {lang === "th" && "ลดขนาด PDF โดยไม่กระทบคุณภาพ"}
+          {lang === "ja" && "品質を損なうことなくPDFサイズを縮小"}
+        </>
+      ),
+      linear: "from-emerald-500 via-green-500 to-lime-400",
+      href: "/compress",
+      active: true
     },
-    ja: {
-      title: "プロフェッショナルPDFツール",
-      subtitle: "PDFを簡単に変換、編集、管理",
-      merge: "PDFを結合",
-      mergeDesc: "複数のPDFファイルを1つのシームレスな文書に結合",
-      compress: "PDFを圧縮",
-      compressDesc: "品質を損なうことなくPDFサイズを縮小",
-      edit: "PDFを編集",
-      editDesc: "テキスト、画像、ページを簡単に修正",
-      comingSplit: "PDF分割",
-      comingSplitDesc: "大きなPDFを小さなファイルに分割 (近日公開)",
-      comingExtract: "テキスト抽出",
-      comingExtractDesc: "PDFからテキストやデータを抽出 (近日公開)",
-      comingImage: "PDFを画像に変換",
-      comingImageDesc: "PDFページを高品質な画像に変換 (近日公開)",
-      comingSearch: "PDF内検索",
-      comingSearchDesc: "高度な検索とOCR機能 (近日公開)",
-      featuresTitle: "私たちのツールを選ぶ理由",
-      secure: "安全 & プライベート",
-      secureDesc: "ファイルはローカルで処理され、サーバーにアップロードされません",
-      fast: "超高速",
-      fastDesc: "高速処理用に最適化されたアルゴリズム",
-      free: "100% 無料",
-      freeDesc: "サブスクリプション、制限、透かしなし",
-      global: "多言語対応",
-      globalDesc: "英語、タイ語、日本語を完全にサポート",
-      trusted: "数千人に信頼されています",
-      trustedDesc: "世界中のユーザーが毎日私たちのツールを利用",
-      statsTitle: "私たちの影響",
-      filesProcessed: "処理済みファイル",
-      timeSaved: "節約時間",
-      happyUsers: "満足ユーザー",
-      countries: "国",
+    {
+      id: 3,
+      icon: FileText,
+      title: (
+        <>
+          {lang === "en" && "Edit PDF"}
+          {lang === "th" && "แก้ไข PDF"}
+          {lang === "ja" && "PDFを編集"}
+        </>
+      ),
+      desc: (
+        <>
+          {lang === "en" && "Modify text, images, and pages effortlessly"}
+          {lang === "th" && "แก้ไขข้อความ รูปภาพ และหน้าเอกสารอย่างง่ายดาย"}
+          {lang === "ja" && "テキスト、画像、ページを簡単に編集"}
+        </>
+      ),
+      linear: "from-purple-500 via-pink-500 to-rose-400",
+      href: "/editor",
+      active: true
     },
-  }[lang as Lang];
-
-  const titleY = useTransform(scrollY, [0, 300], [0, -60]);
-  const gridY = useTransform(scrollY, [0, 300], [0, -30]);
-  const scale = useTransform(scrollY, [0, 300], [1, 0.98]);
-  const opacity = useTransform(scrollY, [0, 300], [1, 0.95]);
-
-  const springTitleY = useSpring(titleY, { stiffness: 100, damping: 30 });
-  const springGridY = useSpring(gridY, { stiffness: 100, damping: 30 });
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 30, scale: 0.95 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        delay: i * 0.08,
-        duration: 0.6,
-        ease: [0.22, 1, 0.36, 1],
-        scale: { delay: i * 0.08 + 0.3, duration: 0.4 },
-      },
-    }),
-    hover: {
-      y: -8,
-      scale: 1.02,
-      boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
-      transition: { duration: 0.3, ease: "easeOut" },
+    {
+      id: 4,
+      icon: Scissors,
+      title: (
+        <>
+          {lang === "en" && "Split PDF"}
+          {lang === "th" && "แยก PDF"}
+          {lang === "ja" && "PDFを分割"}
+        </>
+      ),
+      desc: (
+        <>
+          {lang === "en" && "Divide large PDFs into smaller files"}
+          {lang === "th" && "แบ่งไฟล์ PDF ขนาดใหญ่เป็นไฟล์เล็กๆ"}
+          {lang === "ja" && "大きなPDFを小さなファイルに分割"}
+        </>
+      ),
+      linear: "from-amber-500 via-orange-500 to-red-400",
+      active: false
     },
-  };
-
-  const floatingIcons = [
-    { icon: FileEdit, x: "10%", y: "20%", delay: 0 },
-    { icon: FileDown, x: "85%", y: "15%", delay: 1 },
-    { icon: Scissors, x: "15%", y: "80%", delay: 2 },
-    { icon: FileText, x: "90%", y: "75%", delay: 3 },
+    {
+      id: 5,
+      icon: FileSearch,
+      title: (
+        <>
+          {lang === "en" && "Extract PDF Data"}
+          {lang === "th" && "ดึงข้อมูล PDF"}
+          {lang === "ja" && "PDFデータを抽出"}
+        </>
+      ),
+      desc: (
+        <>
+          {lang === "en" && "Extract text and data from PDFs"}
+          {lang === "th" && "ดึงข้อความและข้อมูลจากไฟล์ PDF"}
+          {lang === "ja" && "PDFからテキストとデータを抽出"}
+        </>
+      ),
+      linear: "from-rose-500 via-red-500 to-pink-400",
+      active: false
+    },
+    {
+      id: 6,
+      icon: FileUp,
+      title: (
+        <>
+          {lang === "en" && "PDF to Images"}
+          {lang === "th" && "PDF เป็นรูปภาพ"}
+          {lang === "ja" && "PDFを画像に変換"}
+        </>
+      ),
+      desc: (
+        <>
+          {lang === "en" && "Convert PDF pages to high-quality images"}
+          {lang === "th" && "แปลงหน้า PDF เป็นรูปภาพคุณภาพสูง"}
+          {lang === "ja" && "PDFページを高品質な画像に変換"}
+        </>
+      ),
+      linear: "from-violet-500 via-purple-500 to-indigo-400",
+      active: false
+    }
   ];
 
   const stats = [
-    { value: "500K+", label: t.filesProcessed, icon: FileText },
-    { value: "10K+", label: t.timeSaved, icon: Clock },
-    { value: "50K+", label: t.happyUsers, icon: Users },
-    { value: "150+", label: t.countries, icon: Globe },
+    { value: "500K+", label: "Files Processed", icon: FileText, color: "from-blue-500 to-cyan-500" },
+    { value: "10K+", label: "Hours Saved", icon: Clock, color: "from-emerald-500 to-teal-500" },
+    { value: "50K+", label: "Happy Users", icon: Users, color: "from-purple-500 to-pink-500" },
+    { value: "150+", label: "Countries", icon: Globe, color: "from-amber-500 to-orange-500" }
   ];
 
   const features = [
-    { icon: Shield, title: t.secure, desc: t.secureDesc, color: "emerald" },
-    { icon: Zap, title: t.fast, desc: t.fastDesc, color: "amber" },
-    { icon: Star, title: t.free, desc: t.freeDesc, color: "blue" },
-    { icon: Globe, title: t.global, desc: t.globalDesc, color: "purple" },
-    { icon: Users, title: t.trusted, desc: t.trustedDesc, color: "rose" },
-    { icon: CheckCircle, title: "Easy to Use", desc: "Intuitive interface for everyone", color: "indigo" },
+    {
+      icon: Shield,
+      title: "Secure & Private",
+      desc: "Files processed locally, never uploaded",
+      linear: "from-emerald-400 to-teal-400"
+    },
+    {
+      icon: Zap,
+      title: "Lightning Fast",
+      desc: "Optimized for instant processing",
+      linear: "from-amber-400 to-orange-400"
+    },
+    {
+      icon: Star,
+      title: "100% Free",
+      desc: "No limits, no watermarks, forever",
+      linear: "from-blue-400 to-cyan-400"
+    },
+    {
+      icon: Globe,
+      title: "Multilingual",
+      desc: "Full support for 3+ languages",
+      linear: "from-purple-400 to-pink-400"
+    },
+    {
+      icon: Users,
+      title: "Trusted Globally",
+      desc: "Used by thousands worldwide",
+      linear: "from-rose-400 to-red-400"
+    },
+    {
+      icon: CheckCircle,
+      title: "Easy to Use",
+      desc: "Intuitive design for everyone",
+      linear: "from-indigo-400 to-violet-400"
+    }
   ];
 
-  return (
-    <div className="relative min-h-screen overflow-hidden bg-linear-to-br from-slate-50 via-white to-indigo-50/30 dark:from-zinc-950 dark:via-zinc-900 dark:to-indigo-950/30">
-      {/* Animated Background Elements */}
-      <Particles count={80} />
+  const isDark = theme === 'dark';
 
-      {/* Floating Icons Animation */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {floatingIcons.map((item, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 0.1, y: 0 }}
-            transition={{ delay: item.delay, duration: 2, repeat: Infinity, repeatType: "reverse" }}
-            className="absolute"
-            style={{ left: item.x, top: item.y }}
-          >
-            <item.icon className="h-12 w-12 text-indigo-300 dark:text-indigo-700" />
-          </motion.div>
+  return (
+    <div className={`relative min-h-screen overflow-hidden transition-colors duration-500 ${isDark
+      ? 'bg-linear-to-br from-slate-950 via-purple-950 to-slate-950 text-white'
+      : 'bg-linear-to-br from-slate-50 via-purple-50 to-slate-50 text-slate-900'
+      }`}>
+      {/* Animated Background */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* linear Orbs */}
+        <div
+          className={`absolute w-96 h-96 rounded-full blur-3xl transition-all duration-1000 ease-out ${isDark ? 'bg-linear-to-r from-blue-500/20 to-cyan-500/20' : 'bg-linear-to-r from-blue-400/30 to-cyan-400/30'
+            }`}
+          style={{
+            left: `${mousePos.x / 20}px`,
+            top: `${mousePos.y / 20}px`,
+          }}
+        />
+        <div
+          className={`absolute w-96 h-96 rounded-full blur-3xl transition-all duration-1000 ease-out ${isDark ? 'bg-linear-to-r from-purple-500/20 to-pink-500/20' : 'bg-linear-to-r from-purple-400/30 to-pink-400/30'
+            }`}
+          style={{
+            right: `${mousePos.x / 30}px`,
+            bottom: `${mousePos.y / 30}px`,
+          }}
+        />
+
+        {/* Animated Grid */}
+        <div className={`absolute inset-0 ${isDark
+          ? 'bg-[linear-linear(rgba(255,255,255,0.02)_1px,transparent_1px),linear-linear(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)]'
+          : 'bg-[linear-linear(rgba(0,0,0,0.03)_1px,transparent_1px),linear-linear(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)]'
+          } bg-size-[100px_100px] mask-[radial-linear(ellipse_80%_50%_at_50%_50%,black,transparent)]`} />
+
+        {/* Floating Particles */}
+        {[...Array(30)].map((_, i) => (
+          <div
+            key={i}
+            className={`absolute w-1 h-1 rounded-full animate-pulse ${isDark ? 'bg-white/30' : 'bg-slate-900/20'
+              }`}
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 3}s`,
+              animationDuration: `${2 + Math.random() * 3}s`
+            }}
+          />
         ))}
       </div>
 
-      {/* linear Orbs */}
-      <div className="absolute top-0 left-1/4 h-96 w-96 rounded-full bg-linear-to-r from-blue-500/10 to-purple-500/10 blur-3xl" />
-      <div className="absolute bottom-0 right-1/4 h-96 w-96 rounded-full bg-linear-to-r from-emerald-500/10 to-cyan-500/10 blur-3xl" />
+      {/* Content */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-20">
+        {/* Hero Section */}
+        <div className="text-center mb-32">
+          <div className="inline-block mb-6">
+            <div className={`flex items-center gap-2 backdrop-blur-xl px-4 py-2 rounded-full border ${isDark
+              ? 'bg-white/10 border-white/20'
+              : 'bg-white/60 border-slate-200/60'
+              }`}>
+              <Sparkles className="w-4 h-4 text-yellow-500 animate-pulse" />
+              <span className="text-sm font-medium">
+                {lang === "en" && "Professional Editor Tools"}
+                {lang === "th" && "เครื่องมือแก้ไขระดับมืออาชีพ"}
+                {lang === "ja" && "プロフェッショナルエディターツール"}
+              </span>
+            </div>
+          </div>
 
-      <motion.div
-        style={{ y: springTitleY, scale, opacity }}
-        className="mx-auto max-w-7xl px-6 py-20 text-center relative"
-      >
-        {/* Header with Glow Effect */}
-        <div className="relative mb-12">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="absolute -inset-4 bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 rounded-3xl blur-xl opacity-20"
-          />
+          <h1 className="text-6xl md:text-8xl font-black mb-8 leading-tight">
+            <span className="inline-block animate-[float_3s_ease-in-out_infinite]">
+              {lang === "en" && "Transform"}
+              {lang === "th" && "เปลี่ยนแปลง"}
+              {lang === "ja" && "変換"}
 
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="relative mb-6 bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-5xl font-bold text-transparent md:text-7xl"
-          >
-            {t.title}
-            <Sparkles className="inline ml-4 h-10 w-10 text-yellow-500" />
-          </motion.h1>
+            </span>
+            <br />
+            <span className="bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-[shimmer_3s_ease-in-out_infinite] bg-size-[200%_100%]">
+              {lang === "en" && "Your PDFs"}
+              {lang === "th" && "ไฟล์ PDF ของคุณ"}
+              {lang === "ja" && "あなたのPDF"}
+            </span>
+          </h1>
 
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="relative mx-auto mb-16 max-w-2xl text-xl text-gray-600 dark:text-gray-300"
-          >
-            {t.subtitle}
-          </motion.p>
+          <p className={`text-xl md:text-2xl max-w-3xl mx-auto mb-12 leading-relaxed ${isDark ? 'text-gray-300' : 'text-slate-600'
+            }`}>
+            {lang === "en" && "Edit, merge, and manage your documents with lightning-fast,"}
+            {lang === "th" && "แก้ไข ผสาน และจัดการเอกสารของคุณด้วยความเร็วสูง,"}
+            {lang === "ja" && "ドキュメントを超高速で編集、マージ、管理します、"}
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-blue-400">
+              {lang === "en" && "professional-grade tools"}
+              {lang === "th" && "เครื่องมือระดับมืออาชีพ"}
+              {lang === "ja" && "プロフェッショナルエディターツール"}
+            </span>
+          </p>
+
+          <div className="flex flex-wrap gap-4 justify-center">
+            <button className="group relative px-8 py-4 bg-linear-to-r from-blue-500 to-cyan-500 rounded-xl font-semibold text-lg text-white overflow-hidden transition-all hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/50">
+              <span className="relative z-10 flex items-center gap-2">
+                {lang === "en" && "Get Started Free"}
+                {lang === "th" && "เริ่มต้นฟรี"}
+                {lang === "ja" && "無料で始める"}
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </span>
+              <div className="absolute inset-0 bg-linear-to-r from-cyan-500 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </button>
+            <button className={`px-8 py-4 backdrop-blur-xl rounded-xl font-semibold text-lg border transition-all hover:scale-105 ${isDark
+              ? 'bg-white/10 border-white/20 hover:bg-white/20'
+              : 'bg-white/60 border-slate-200/60 hover:bg-white/80'
+              }`}>
+              {lang === "en" && "Learn More"}
+              {lang === "th" && "เรียนรู้เพิ่มเติม"}
+              {lang === "ja" && "もっと詳しく"}
+            </button>
+          </div>
         </div>
 
-        {/* Stats Section */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="mb-20 grid grid-cols-2 gap-6 md:grid-cols-4"
-        >
-          {stats.map((stat, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="rounded-2xl bg-white/50 p-6 backdrop-blur-sm dark:bg-zinc-800/50"
-            >
-              <div className="flex items-center justify-center gap-3">
-                <stat.icon className="h-8 w-8 text-indigo-600 dark:text-indigo-400" />
-                <div className="text-left">
-                  <div className="text-3xl font-bold text-gray-900 dark:text-white">
-                    {stat.value}
-                  </div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">
-                    {stat.label}
-                  </div>
+        {/* Animated Stats */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-32">
+          {stats.map((stat, i) => {
+            const Icon = stat.icon;
+            const isActive = currentStat === i;
+            return (
+              <div
+                key={i}
+                className={`relative p-6 rounded-2xl backdrop-blur-xl transition-all duration-500 ${isActive
+                  ? isDark
+                    ? 'bg-white/20 border-2 border-white/40 scale-105'
+                    : 'bg-white/60 border-2 border-slate-300/60 scale-105'
+                  : isDark
+                    ? 'bg-white/5 border border-white/10'
+                    : 'bg-white/30 border border-slate-200/30'
+                  }`}
+              >
+                <div className={`absolute inset-0 bg-linear-to-br ${stat.color} opacity-0 ${isActive ? 'opacity-20' : ''} transition-opacity duration-500 rounded-2xl`} />
+                <div className="relative">
+                  <Icon className={`w-8 h-8 mb-3 transition-transform duration-500 ${isActive ? 'scale-110' : ''}`} />
+                  <div className="text-3xl font-bold mb-1">{stat.value}</div>
+                  <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-slate-600'}`}>{stat.label}</div>
                 </div>
+                {isActive && (
+                  <div className="absolute top-2 right-2">
+                    <TrendingUp className="w-4 h-4 text-emerald-400 animate-bounce" />
+                  </div>
+                )}
               </div>
-            </motion.div>
-          ))}
-        </motion.div>
+            );
+          })}
+        </div>
 
-        {/* Main Tools Grid */}
-        <motion.div
-          style={{ y: springGridY }}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 mb-20"
-        >
-          <ToolCard
-            index={1}
-            variants={cardVariants}
-            href="/merger"
-            icon={<FileEdit size={44} />}
-            title={t.merge}
-            desc={t.mergeDesc}
-            color="from-blue-500 to-cyan-500"
-            isHovered={hoveredCard === 1}
-            onHover={() => setHoveredCard(1)}
-            onLeave={() => setHoveredCard(null)}
-          />
-          <ToolCard
-            index={2}
-            variants={cardVariants}
-            href="/compress"
-            icon={<FileDown size={44} />}
-            title={t.compress}
-            desc={t.compressDesc}
-            color="from-emerald-500 to-teal-500"
-            isHovered={hoveredCard === 2}
-            onHover={() => setHoveredCard(2)}
-            onLeave={() => setHoveredCard(null)}
-          />
-          <ToolCard
-            index={3}
-            variants={cardVariants}
-            href="/editor"
-            icon={<FileText size={44} />}
-            title={t.edit}
-            desc={t.editDesc}
-            color="from-purple-500 to-pink-500"
-            isHovered={hoveredCard === 3}
-            onHover={() => setHoveredCard(3)}
-            onLeave={() => setHoveredCard(null)}
-          />
+        {/* Tools Grid */}
+        <div className="mb-32">
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
+            Powerful Tools at Your
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-blue-400">
+              {' '}Fingertips
+            </span>
+          </h2>
 
-          <ComingSoonCard
-            index={4}
-            variants={cardVariants}
-            icon={<Scissors size={44} />}
-            title={t.comingSplit}
-            desc={t.comingSplitDesc}
-            color="from-amber-500 to-orange-500"
-          />
-          <ComingSoonCard
-            index={5}
-            variants={cardVariants}
-            icon={<FileText size={44} />}
-            title={t.comingExtract}
-            desc={t.comingExtractDesc}
-            color="from-rose-500 to-red-500"
-          />
-          <ComingSoonCard
-            index={6}
-            variants={cardVariants}
-            icon={<FileUp size={44} />}
-            title={t.comingImage}
-            desc={t.comingImageDesc}
-            color="from-violet-500 to-purple-500"
-          />
-          <ComingSoonCard
-            index={7}
-            variants={cardVariants}
-            icon={<FileSearch size={44} />}
-            title={t.comingSearch}
-            desc={t.comingSearchDesc}
-            color="from-cyan-500 to-blue-500"
-          />
-        </motion.div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {tools.map((tool, i) => {
+              const Icon = tool.icon;
+              const isHovered = hoveredCard === tool.id;
+
+              const Card = (
+                <div
+                  className={`relative h-full p-8 rounded-2xl backdrop-blur-xl transition-all duration-500 ${tool.active
+                    ? isDark
+                      ? 'bg-white/10 border border-white/20 hover:bg-white/15 hover:scale-105 cursor-pointer'
+                      : 'bg-white/40 border border-slate-200/40 hover:bg-white/60 hover:scale-105 cursor-pointer'
+                    : isDark
+                      ? 'bg-white/5 border border-white/10 opacity-60'
+                      : 'bg-white/20 border border-slate-200/20 opacity-60'
+                    }`}
+                >
+                  {!tool.active && (
+                    <div className="absolute top-4 right-4 px-3 py-1 bg-linear-to-r from-amber-500 to-orange-500 rounded-full text-xs font-bold text-white">
+                      SOON
+                    </div>
+                  )}
+
+                  <div
+                    className={`relative w-16 h-16 mb-6 rounded-xl bg-linear-to-br ${tool.linear
+                      } flex items-center justify-center transition-all duration-500 ${isHovered ? 'scale-110 rotate-3' : ''
+                      }`}
+                  >
+                    <Icon className="w-8 h-8 text-white" />
+                  </div>
+
+                  <h3 className="text-2xl font-bold mb-3 flex items-center gap-2">
+                    {tool.title}
+                    {isHovered && tool.active && (
+                      <ArrowRight className="w-5 h-5 animate-[bounceRight_1s_ease-in-out_infinite]" />
+                    )}
+                  </h3>
+
+                  <p className={isDark ? 'text-gray-400' : 'text-slate-600'}>
+                    {tool.desc}
+                  </p>
+
+                  {tool.active && (
+                    <div
+                      className={`mt-6 h-1 bg-linear-to-r ${tool.linear
+                        } rounded-full transition-all duration-500 ${isHovered ? 'w-full' : 'w-0'
+                        }`}
+                    />
+                  )}
+                </div>
+              );
+
+              return (
+                <div
+                  key={tool.id}
+                  className="group relative"
+                  onMouseEnter={() => setHoveredCard(tool.id)}
+                  onMouseLeave={() => setHoveredCard(null)}
+                  style={{ animationDelay: `${i * 100}ms` }}
+                >
+                  {tool.active && tool.href ? (
+                    <Link href={tool.href} className="block h-full">
+                      {Card}
+                    </Link>
+                  ) : (
+                    Card
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
 
         {/* Features Section */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="mb-20"
-        >
-          <h2 className="mb-12 text-3xl font-bold text-gray-900 dark:text-white">
-            {t.featuresTitle}
+        <div className="mb-32">
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
+            Why Choose
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-purple-400 to-pink-400"> Our Platform</span>
           </h2>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -5 }}
-                className="group rounded-2xl bg-white/50 p-6 backdrop-blur-sm transition-all hover:bg-white/80 dark:bg-zinc-800/50 dark:hover:bg-zinc-800/80"
-              >
-                <div className={`mb-4 inline-flex rounded-xl bg-${feature.color}-100 p-3 dark:bg-${feature.color}-900/20`}>
-                  <feature.icon className={`h-8 w-8 text-${feature.color}-600 dark:text-${feature.color}-400`} />
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {features.map((feature, i) => {
+              const Icon = feature.icon;
+              return (
+                <div
+                  key={i}
+                  className={`group p-8 rounded-2xl backdrop-blur-xl border transition-all duration-500 hover:scale-105 ${isDark
+                    ? 'bg-white/5 border-white/10 hover:bg-white/10'
+                    : 'bg-white/30 border-slate-200/30 hover:bg-white/50'
+                    }`}
+                  style={{ animationDelay: `${i * 100}ms` }}
+                >
+                  <div className={`w-12 h-12 mb-4 rounded-lg bg-linear-to-br ${feature.linear} flex items-center justify-center group-hover:scale-110 transition-transform duration-500`}>
+                    <Icon className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
+                  <p className={isDark ? 'text-gray-400' : 'text-slate-600'}>{feature.desc}</p>
                 </div>
-                <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400">
-                  {feature.desc}
-                </p>
-              </motion.div>
-            ))}
+              );
+            })}
           </div>
-        </motion.div>
-
-        {/* CTA Section */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          className="rounded-3xl bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 p-12 text-white"
-        >
-          <div className="mx-auto max-w-2xl">
-            <h2 className="mb-4 text-3xl font-bold">
-              Ready to transform your PDF workflow?
-            </h2>
-            <p className="mb-8 text-lg opacity-90">
-              Start using our professional tools today. No registration required.
-            </p>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="rounded-xl bg-white px-8 py-4 text-lg font-semibold text-indigo-600 shadow-lg"
-            >
-              Get Started Free
-            </motion.button>
-          </div>
-        </motion.div>
-      </motion.div>
-    </div>
-  );
-}
-
-interface CardProps {
-  href?: string;
-  icon: ReactNode;
-  title: string;
-  desc?: string;
-  variants: any;
-  index: number;
-  color: string;
-  isHovered?: boolean;
-  onHover?: () => void;
-  onLeave?: () => void;
-}
-
-function ToolCard({ href, icon, title, desc, variants, index, color, isHovered, onHover, onLeave }: CardProps) {
-  return (
-    <motion.div
-      custom={index}
-      variants={variants}
-      whileHover="hover"
-      onMouseEnter={onHover}
-      onMouseLeave={onLeave}
-      className="relative"
-    >
-      <Link
-        href={href!}
-        className="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-white/80 p-8 text-left backdrop-blur-sm transition-all dark:bg-zinc-800/80"
-      >
-        {/* Animated linear Border */}
-        <div className={`absolute inset-0 bg-linear-to-br ${color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
-
-        {/* Corner Accents */}
-        <div className={`absolute top-0 right-0 h-24 w-24 -translate-y-12 translate-x-12 bg-linear-to-br ${color} opacity-0 group-hover:opacity-20 rounded-full blur-xl transition-opacity duration-300`} />
-
-        <div className="relative z-10">
-          <div className={`mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-linear-to-br ${color} p-4 text-white transition-all duration-300 group-hover:scale-110 group-hover:rotate-3`}>
-            {icon}
-          </div>
-
-          <h2 className="mb-3 text-2xl font-bold text-gray-900 dark:text-white">
-            {title}
-            {isHovered && (
-              <motion.span
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="ml-2 inline-block"
-              >
-                →
-              </motion.span>
-            )}
-          </h2>
-
-          <p className="text-gray-600 dark:text-gray-400">{desc}</p>
-
-          <motion.div
-            initial={{ width: 0 }}
-            whileHover={{ width: "100%" }}
-            className="mt-6 h-1 bg-linear-to-r from-transparent via-current to-transparent"
-          />
-        </div>
-      </Link>
-    </motion.div>
-  );
-}
-
-function ComingSoonCard({ icon, title, desc, variants, index, color }: CardProps) {
-  return (
-    <motion.div
-      custom={index}
-      variants={variants}
-      className="group relative overflow-hidden rounded-3xl bg-linear-to-br from-gray-100 to-gray-50/50 p-8 backdrop-blur-sm dark:from-zinc-800/50 dark:to-zinc-900/50"
-    >
-      {/* Shimmer Effect */}
-      <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-
-      <div className="relative">
-        <div className={`mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-linear-to-br ${color} p-4 opacity-80`}>
-          {icon}
-        </div>
-
-        <div className="mb-3 flex items-center gap-2">
-          <h2 className="text-2xl font-bold text-gray-900/50 dark:text-white/50">
-            {title}
-          </h2>
-          <span className="rounded-full bg-linear-to-r from-amber-400 to-orange-500 px-3 py-1 text-xs font-semibold text-white">
-            SOON
-          </span>
-        </div>
-
-        <p className="text-gray-500 dark:text-gray-500">{desc}</p>
-
-        <div className="mt-6 flex items-center gap-2 text-sm text-gray-400">
-          <Clock className="h-4 w-4" />
-          <span>Coming Soon</span>
         </div>
       </div>
-    </motion.div>
+
+      <style>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-20px); }
+        }
+        @keyframes shimmer {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        @keyframes bounceRight {
+          0%, 100% { transform: translateX(0); }
+          50% { transform: translateX(5px); }
+        }
+      `}</style>
+    </div>
   );
 }
