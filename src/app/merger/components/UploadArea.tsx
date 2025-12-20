@@ -1,6 +1,7 @@
 "use client";
 
 import { CloudUpload } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface Props {
   disabled?: boolean;
@@ -8,6 +9,8 @@ interface Props {
 }
 
 export default function UploadArea({ disabled, onFiles }: Props) {
+  const { lang } = useLanguage();
+
   return (
     <label
       className={`
@@ -32,13 +35,26 @@ export default function UploadArea({ disabled, onFiles }: Props) {
       />
 
       <p className="text-sm font-medium">
-        {disabled
-          ? "เพิ่มไฟล์ครบ 10 ไฟล์แล้ว"
-          : "คลิกหรือวางไฟล์ PDF ที่นี่"}
+        {disabled ? (
+          <>
+            {lang === "en" && "Maximum of 10 files reached"}
+            {lang === "th" && "เพิ่มไฟล์ครบ 10 ไฟล์แล้ว"}
+            {lang === "ja" && "最大ファイル数10に達しました"}
+          </>
+        ) : (
+          <>
+            {lang === "en" && "Click or drop PDF files here"}
+            {lang === "th" && "คลิกหรือวางไฟล์ PDF ที่นี่"}
+            {lang === "ja" &&
+              "ここをクリックするか、PDFファイルをドロップしてください"}
+          </>
+        )}
       </p>
 
       <p className="mt-1 text-xs text-gray-400">
-        รองรับไฟล์ PDF เท่านั้น
+        {lang === "en" && "PDF files only"}
+        {lang === "th" && "รองรับไฟล์ PDF เท่านั้น"}
+        {lang === "ja" && "PDF ファイルのみ"}
       </p>
 
       <input

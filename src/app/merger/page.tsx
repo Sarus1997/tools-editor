@@ -7,11 +7,13 @@ import type { PDFFile } from "./types";
 import { mergePDFs } from "./utils/mergePDFs";
 import UploadArea from "./components/UploadArea";
 import PdfList from "./components/PdfList";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const MAX_FILES = 10;
 const uid = () => crypto.randomUUID();
 
 export default function MergerPage() {
+  const { lang } = useLanguage();
   const [files, setFiles] = useState<PDFFile[]>([]);
   const [theme, setTheme] = useState<"light" | "dark">("dark");
 
@@ -86,7 +88,10 @@ export default function MergerPage() {
             }`}
         >
           <ArrowLeft size={18} />
-          กลับหน้าแรก
+          {lang === "en" && "Back to Home"}
+          {lang === "th" && "กลับหน้าแรก"}
+          {lang === "ja" && "ホームに戻る"}
+
         </Link>
 
         <div
@@ -120,7 +125,9 @@ export default function MergerPage() {
               "
             >
               <Download size={20} />
-              รวมและดาวน์โหลด PDF
+              {lang === "en" && "Merge & Download PDF"}
+              {lang === "th" && "รวมและดาวน์โหลด PDF"}
+              {lang === "ja" && "PDF を結合してダウンロード"}
             </button>
           </div>
         </div>

@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
+
 import {
   DndContext,
   closestCenter,
@@ -23,6 +25,7 @@ interface Props {
 }
 
 export default function PdfList({ files, setFiles }: Props) {
+  const { lang } = useLanguage();
   const [theme, setTheme] = useState<"light" | "dark">("dark");
 
   /* ---------------- theme sync ---------------- */
@@ -73,7 +76,9 @@ export default function PdfList({ files, setFiles }: Props) {
       {/* Header */}
       <div className="mb-5 flex items-center justify-between">
         <h2 className="text-lg font-semibold">
-          ไฟล์ทั้งหมด
+          {lang === "en" && "Selected Files"}
+          {lang === "th" && "ไฟล์ที่เลือก"}
+          {lang === "ja" && "選択されたファイル"}
           <span
             className={`ml-2 text-sm ${files.length >= MAX_FILES
               ? "text-red-500"
@@ -92,7 +97,9 @@ export default function PdfList({ files, setFiles }: Props) {
             className="flex items-center gap-1 text-sm text-red-500 hover:text-red-600 transition"
           >
             <Trash2 size={16} />
-            ลบทั้งหมด
+            {lang === "en" && "Clear All"}
+            {lang === "th" && "ลบทั้งหมด"}
+            {lang === "ja" && "全て削除"}
           </button>
         )}
       </div>
@@ -104,9 +111,15 @@ export default function PdfList({ files, setFiles }: Props) {
             }`}
         >
           <FileText size={56} className="opacity-30" />
-          <p className="text-sm">ยังไม่มีไฟล์ PDF</p>
+          <p className="text-sm">
+            {lang === "en" && "No PDF files yet."}
+            {lang === "th" && "ยังไม่มีไฟล์ PDF"}
+            {lang === "ja" && "PDFファイルがありません。"}
+          </p>
           <p className="text-xs opacity-70">
-            ลากไฟล์มาวาง หรือคลิกเพื่อเลือกไฟล์
+            {lang === "en" && "Drag & drop files here, or click to select files"}
+            {lang === "th" && "ลากและวางไฟล์ที่นี่ หรือคลิกเพื่อเลือกไฟล์"}
+            {lang === "ja" && "ファイルをここにドラッグ＆ドロップするか、クリックしてファイルを選択してください"}
           </p>
         </div>
       ) : (
