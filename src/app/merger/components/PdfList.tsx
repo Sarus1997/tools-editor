@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import {
   DndContext,
   closestCenter,
@@ -22,6 +23,31 @@ interface Props {
 }
 
 export default function PdfList({ files, setFiles }: Props) {
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
+
+  /* ---------------- theme sync ---------------- */
+  useEffect(() => {
+    const checkTheme = () => {
+      setTheme(
+        document.documentElement.classList.contains("dark")
+          ? "dark"
+          : "light"
+      );
+    };
+
+    checkTheme();
+    const observer = new MutationObserver(checkTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const isDark = theme === "dark";
+
+  /* ---------------- drag logic ---------------- */
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (!over || active.id === over.id) return;
@@ -38,16 +64,23 @@ export default function PdfList({ files, setFiles }: Props) {
   };
 
   return (
-    <div className="mt-6 rounded-2xl border border-gray-700 bg-gray-900 p-4">
-      <div className="mb-4 flex items-center justify-between">
-        <h2 className="font-semibold">
-          ไฟล์ทั้งหมด{" "}
+    <div
+      className={`rounded-3xl backdrop-blur-xl p-6 shadow-xl border transition-colors ${isDark
+        ? "bg-white/5 border-white/10"
+        : "bg-white/70 border-gray-200"
+        }`}
+    >
+      {/* Header */}
+      <div className="mb-5 flex items-center justify-between">
+        <h2 className="text-lg font-semibold">
+          ไฟล์ทั้งหมด
           <span
-            className={
-              files.length >= MAX_FILES
-                ? "text-red-400"
-                : "text-gray-400"
-            }
+            className={`ml-2 text-sm ${files.length >= MAX_FILES
+              ? "text-red-500"
+              : isDark
+                ? "text-gray-400"
+                : "text-gray-500"
+              }`}
           >
             ({files.length}/{MAX_FILES})
           </span>
@@ -56,7 +89,7 @@ export default function PdfList({ files, setFiles }: Props) {
         {files.length > 0 && (
           <button
             onClick={() => setFiles([])}
-            className="flex items-center gap-1 text-sm text-red-400 hover:text-red-500"
+            className="flex items-center gap-1 text-sm text-red-500 hover:text-red-600 transition"
           >
             <Trash2 size={16} />
             ลบทั้งหมด
@@ -64,10 +97,17 @@ export default function PdfList({ files, setFiles }: Props) {
         )}
       </div>
 
+      {/* Empty state */}
       {files.length === 0 ? (
-        <div className="flex flex-col items-center gap-2 py-12 text-gray-500">
-          <FileText size={48} className="opacity-40" />
-          ยังไม่มีไฟล์
+        <div
+          className={`flex flex-col items-center gap-3 py-16 ${isDark ? "text-gray-500" : "text-gray-400"
+            }`}
+        >
+          <FileText size={56} className="opacity-30" />
+          <p className="text-sm">ยังไม่มีไฟล์ PDF</p>
+          <p className="text-xs opacity-70">
+            ลากไฟล์มาวาง หรือคลิกเพื่อเลือกไฟล์
+          </p>
         </div>
       ) : (
         <DndContext
@@ -78,7 +118,7 @@ export default function PdfList({ files, setFiles }: Props) {
             items={files.map((f) => f.id)}
             strategy={verticalListSortingStrategy}
           >
-            <div className="space-y-2">
+            <div className="space-y-3">
               {files.map((file) => (
                 <PdfItem
                   key={file.id}
