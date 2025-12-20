@@ -4,6 +4,7 @@ import "./globals.css";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PDF Tools",
+  title: "Tools Editor",
   description: "All-in-one PDF tools",
 };
 
@@ -39,6 +40,9 @@ export default function RootLayout({
             <main>
               {children}
             </main>
+
+            {/* ✅ Footer ต้องอยู่ตรงนี้ */}
+            <Footer />
           </LanguageProvider>
         </ThemeProvider>
       </body>
