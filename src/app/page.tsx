@@ -403,7 +403,7 @@ export default function PremiumLanding() {
             </span>
             <br />
             <span className="bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-[shimmer_3s_ease-in-out_infinite] bg-size-[200%_100%]">
-              {lang === "en" && "YYour Files"}
+              {lang === "en" && "Your Files"}
               {lang === "th" && "ไฟล์ของคุณ"}
               {lang === "ja" && "あなたのファイル"}
             </span>
