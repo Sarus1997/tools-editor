@@ -496,6 +496,30 @@ export default function Footer() {
                 </>
               )}
 
+              {activeModal === "terms" && (
+                <>
+                  <div className="space-y-3 sm:space-y-4">
+                    <h3 className="text-sm sm:text-base font-semibold text-zinc-800 dark:text-zinc-200 flex items-center gap-2">
+                      <span className="w-1 sm:w-1.5 h-1 sm:h-1.5 rounded-full bg-indigo-500 shrink-0" />
+                      {lang === "en" && "Terms & Conditions"}
+                      {lang === "th" && "ข้อกำหนดและเงื่อนไขการใช้งาน"}
+                      {lang === "ja" && "利用規約"}
+                    </h3>
+
+                    <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                      {lang === "en" &&
+                        "By accessing and using this website, you agree to comply with and be bound by these terms and conditions. The content on this website is for general information purposes only and may be changed without notice."}
+
+                      {lang === "th" &&
+                        "การเข้าใช้งานเว็บไซต์นี้ถือว่าคุณยอมรับและตกลงปฏิบัติตามข้อกำหนดและเงื่อนไขการใช้งานทั้งหมด เนื้อหาบนเว็บไซต์มีไว้เพื่อให้ข้อมูลทั่วไปเท่านั้น และอาจมีการเปลี่ยนแปลงได้โดยไม่ต้องแจ้งให้ทราบล่วงหน้า"}
+
+                      {lang === "ja" &&
+                        "本ウェブサイトを利用することにより、利用者は本利用規約に同意したものとみなされます。本サイトの内容は一般的な情報提供を目的としており、予告なく変更される場合があります。"}
+                    </p>
+                  </div>
+                </>
+              )}
+
               {activeModal === "cookies" && (
                 <>
                   <div className="space-y-3 sm:space-y-4">
