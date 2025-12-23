@@ -403,9 +403,9 @@ export default function PremiumLanding() {
             </span>
             <br />
             <span className="bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-[shimmer_3s_ease-in-out_infinite] bg-size-[200%_100%]">
-              {lang === "en" && "Your PDFs"}
-              {lang === "th" && "ไฟล์ PDF ของคุณ"}
-              {lang === "ja" && "あなたのPDF"}
+              {lang === "en" && "YYour Files"}
+              {lang === "th" && "ไฟล์ของคุณ"}
+              {lang === "ja" && "あなたのファイル"}
             </span>
           </h1>
 
