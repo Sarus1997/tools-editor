@@ -114,7 +114,7 @@ export default function Navbar() {
                 {/* Text Container */}
                 <div className="relative">
                   <h1 className="text-2xl md:text-3xl font-black bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent animate-linear-x bg-size-[200%_auto] tracking-tight">
-                    PDF EDITOR
+                    TOOLS EDITOR
                   </h1>
                   <p className="text-[10px] md:text-xs text-zinc-500 dark:text-zinc-400 font-semibold tracking-widest uppercase mt-0.5">
                     {lang === "en" && "Professional Suite"}
