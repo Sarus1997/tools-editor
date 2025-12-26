@@ -1,5 +1,4 @@
-/* eslint-disable react-hooks/set-state-in-effect */
-/* eslint-disable react-hooks/static-components */
+/* eslint-disable react-hooks/immutability */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
@@ -17,6 +16,7 @@ interface CookiePreferences {
   preferences: boolean;
   marketing: boolean;
   consentDate: string;
+  consentExpiry: string; // เพิ่มฟิลด์วันหมดอายุ
   version: number;
 }
 
@@ -31,6 +31,7 @@ export default function Footer() {
     preferences: false,
     marketing: false,
     consentDate: '',
+    consentExpiry: '', // วันที่หมดอายุ
     version: 1
   });
 
@@ -38,6 +39,27 @@ export default function Footer() {
   const [showCookieBanner, setShowCookieBanner] = useState(false);
 
   const { lang } = useLanguage();
+
+  // ฟังก์ชันตรวจสอบว่าคุกกี้หมดอายุหรือยัง (เกิน 7 วัน)
+  const isConsentExpired = (consentExpiry: string): boolean => {
+    if (!consentExpiry) return true;
+
+    try {
+      const expiryDate = new Date(consentExpiry);
+      const currentDate = new Date();
+      return currentDate >= expiryDate;
+    } catch (error) {
+      console.error("Error parsing consent expiry date:", error);
+      return true;
+    }
+  };
+
+  // ฟังก์ชันคำนวณวันที่หมดอายุ (7 วันจากนี้)
+  const calculateExpiryDate = (): string => {
+    const expiryDate = new Date();
+    expiryDate.setDate(expiryDate.getDate() + 7); // เพิ่ม 7 วัน
+    return expiryDate.toISOString();
+  };
 
   // ตรวจสอบคุกกี้ consent เมื่อโหลด component
   useEffect(() => {
@@ -47,24 +69,59 @@ export default function Footer() {
     if (savedConsent === "accepted" && savedPreferences) {
       try {
         const parsedPreferences = JSON.parse(savedPreferences);
-        setCookiePreferences(parsedPreferences);
-        setShowCookieBanner(false);
+
+        // ตรวจสอบว่าคุกกี้หมดอายุหรือยัง
+        if (parsedPreferences.consentExpiry && !isConsentExpired(parsedPreferences.consentExpiry)) {
+          // ยังไม่หมดอายุ ให้ใช้การตั้งค่าเดิม
+          setCookiePreferences(parsedPreferences);
+          setShowCookieBanner(false);
+
+          // อัพเดทคุกกี้ตามการตั้งค่าเดิม
+          updateCookiesBasedOnPreferences(parsedPreferences);
+        } else {
+          // หมดอายุแล้ว หรือไม่มีข้อมูลวันหมดอายุ ให้รีเซ็ตและแสดงแบนเนอร์
+          console.log("Cookie consent expired or invalid, showing banner");
+          resetToDefaultPreferences();
+          setTimeout(() => {
+            setShowCookieBanner(true);
+          }, 1000);
+        }
       } catch (error) {
         console.error("Error parsing cookie preferences:", error);
+        resetToDefaultPreferences();
+        setTimeout(() => {
+          setShowCookieBanner(true);
+        }, 1000);
       }
     } else {
       // ถ้ายังไม่เคยตั้งค่า ให้แสดงแบนเนอร์
+      resetToDefaultPreferences();
       setTimeout(() => {
         setShowCookieBanner(true);
       }, 1000);
     }
   }, []);
 
+  // รีเซ็ตเป็นค่าเริ่มต้น
+  const resetToDefaultPreferences = () => {
+    const defaultPreferences = {
+      necessary: true,
+      analytics: false,
+      preferences: false,
+      marketing: false,
+      consentDate: '',
+      consentExpiry: '',
+      version: 1
+    };
+    setCookiePreferences(defaultPreferences);
+  };
+
   // บันทึกการตั้งค่าคุกกี้
   const saveCookiePreferences = (prefs: CookiePreferences) => {
     const preferencesWithDate = {
       ...prefs,
-      consentDate: new Date().toISOString()
+      consentDate: new Date().toISOString(),
+      consentExpiry: calculateExpiryDate() // เพิ่มวันหมดอายุ
     };
 
     localStorage.setItem("cookie_consent", "accepted");
@@ -80,7 +137,7 @@ export default function Footer() {
     // สร้างคุกกี้ตามประเภทที่อนุญาต
     if (prefs.analytics) {
       // ตั้งค่าคุกกี้สำหรับ analytics (Google Analytics, etc.)
-      document.cookie = "analytics_cookie=true; path=/; max-age=31536000; SameSite=Lax";
+      document.cookie = "analytics_cookie=true; path=/; max-age=604800; SameSite=Lax"; // 7 วัน
     } else {
       // ลบคุกกี้ analytics
       document.cookie = "analytics_cookie=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
@@ -88,7 +145,7 @@ export default function Footer() {
 
     if (prefs.preferences) {
       // ตั้งค่าคุกกี้สำหรับ preferences
-      document.cookie = "preferences_cookie=true; path=/; max-age=31536000; SameSite=Lax";
+      document.cookie = "preferences_cookie=true; path=/; max-age=604800; SameSite=Lax"; // 7 วัน
     } else {
       // ลบคุกกี้ preferences
       document.cookie = "preferences_cookie=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
@@ -96,14 +153,17 @@ export default function Footer() {
 
     if (prefs.marketing) {
       // ตั้งค่าคุกกี้สำหรับ marketing
-      document.cookie = "marketing_cookie=true; path=/; max-age=31536000; SameSite=Lax";
+      document.cookie = "marketing_cookie=true; path=/; max-age=604800; SameSite=Lax"; // 7 วัน
     } else {
       // ลบคุกกี้ marketing
       document.cookie = "marketing_cookie=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
     }
 
-    // คุกกี้จำเป็นจะถูกตั้งค่าอัตโนมัติเสมอ
-    document.cookie = "necessary_cookie=true; path=/; max-age=31536000; SameSite=Lax";
+    // คุกกี้จำเป็นจะถูกตั้งค่าอัตโนมัติเสมอ (เก็บเป็น 7 วันเพื่อให้สอดคล้อง)
+    document.cookie = "necessary_cookie=true; path=/; max-age=604800; SameSite=Lax";
+
+    // บันทึกคุกกี้สำหรับตรวจสอบการยินยอม (7 วัน)
+    document.cookie = "cookie_consent=accepted; path=/; max-age=604800; SameSite=Lax";
   };
 
   // ฟังก์ชันจัดการการเปลี่ยนแปลงการตั้งค่าคุกกี้
@@ -131,6 +191,7 @@ export default function Footer() {
       preferences: true,
       marketing: true,
       consentDate: new Date().toISOString(),
+      consentExpiry: calculateExpiryDate(),
       version: 1
     };
     saveCookiePreferences(allAccepted);
@@ -146,11 +207,29 @@ export default function Footer() {
       preferences: false,
       marketing: false,
       consentDate: new Date().toISOString(),
+      consentExpiry: calculateExpiryDate(),
       version: 1
     };
     saveCookiePreferences(onlyNecessary);
     setActiveModal(null);
     setShowCookieBanner(false);
+  };
+
+  // ฟังก์ชันล้างการตั้งค่าคุกกี้ทั้งหมด (สำหรับการทดสอบ)
+  const handleResetCookies = () => {
+    localStorage.removeItem("cookie_consent");
+    localStorage.removeItem("cookie_preferences");
+
+    // ลบคุกกี้ทั้งหมด
+    document.cookie = "analytics_cookie=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    document.cookie = "preferences_cookie=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    document.cookie = "marketing_cookie=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    document.cookie = "necessary_cookie=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    document.cookie = "cookie_consent=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+
+    resetToDefaultPreferences();
+    setShowCookieBanner(true);
+    setActiveModal(null);
   };
 
   // แบนเนอร์คุกกี้สำหรับหน้าแรก
@@ -173,9 +252,9 @@ export default function Footer() {
                 </h3>
               </div>
               <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400">
-                {lang === "en" && "We use cookies to enhance your experience. Choose which cookies you allow."}
-                {lang === "th" && "เราใช้คุกกี้เพื่อปรับปรุงประสบการณ์ของคุณ เลือกว่าคุณอนุญาตคุกกี้ประเภทใดบ้าง"}
-                {lang === "ja" && "より良い体験を提供するためクッキーを使用しています。許可するクッキーを選択してください。"}
+                {lang === "en" && "We use cookies to enhance your experience. Choose which cookies you allow. Your preferences will be saved for 7 days."}
+                {lang === "th" && "เราใช้คุกกี้เพื่อปรับปรุงประสบการณ์ของคุณ เลือกว่าคุณอนุญาตคุกกี้ประเภทใดบ้าง การตั้งค่าของคุณจะถูกบันทึกเป็นเวลา 7 วัน"}
+                {lang === "ja" && "より良い体験を提供するためクッキーを使用しています。許可するクッキーを選択してください。設定は7日間保存されます。"}
               </p>
             </div>
 
@@ -210,6 +289,9 @@ export default function Footer() {
       </div>
     );
   };
+
+  // ส่วนที่เหลือของโค้ด Footer เหมือนเดิม...
+  // ... (โค้ด Footer ส่วนที่เหลือทั้งหมดเหมือนเดิม)
 
   return (
     <>
@@ -408,6 +490,14 @@ export default function Footer() {
                     {lang === "th" && "คุกกี้"}
                     {lang === "ja" && "クッキー"}
                   </button>
+                  {/* ปุ่มสำหรับรีเซ็ตคุกกี้ (สำหรับการทดสอบ) */}
+                  <button
+                    onClick={handleResetCookies}
+                    className="text-xs text-zinc-400 hover:text-rose-500 transition-all duration-300"
+                    title="Reset cookie preferences"
+                  >
+                    🔄
+                  </button>
                 </div>
               </div>
             </div>
@@ -530,9 +620,9 @@ export default function Footer() {
                       {lang === "ja" && "クッキー設定"}
                     </h3>
                     <p>
-                      {lang === "en" && "Choose which cookies you allow. Necessary cookies are always enabled for the website to function properly."}
-                      {lang === "th" && "เลือกว่าคุณอนุญาตคุกกี้ประเภทใดบ้าง คุกกี้ที่จำเป็นจะเปิดใช้งานเสมอเพื่อให้เว็บไซต์ทำงานได้อย่างถูกต้อง"}
-                      {lang === "ja" && "許可するクッキーを選択してください。ウェブサイトが正しく機能するために必要なクッキーは常に有効になっています。"}
+                      {lang === "en" && "Choose which cookies you allow. Necessary cookies are always enabled for the website to function properly. Your preferences will be saved for 7 days."}
+                      {lang === "th" && "เลือกว่าคุณอนุญาตคุกกี้ประเภทใดบ้าง คุกกี้ที่จำเป็นจะเปิดใช้งานเสมอเพื่อให้เว็บไซต์ทำงานได้อย่างถูกต้อง การตั้งค่าของคุณจะถูกบันทึกเป็นเวลา 7 วัน"}
+                      {lang === "ja" && "許可するクッキーを選択してください。ウェブサイトが正しく機能するために必要なクッキーは常に有効になっています。設定は7日間保存されます。"}
                     </p>
                   </div>
 
@@ -648,6 +738,17 @@ export default function Footer() {
                       {lang === "en" && "Reject All"}
                       {lang === "th" && "ปฏิเสธทั้งหมด"}
                       {lang === "ja" && "すべて拒否"}
+                    </button>
+
+                    {/* ปุ่มรีเซ็ตสำหรับการทดสอบ */}
+                    <button
+                      onClick={handleResetCookies}
+                      className="px-5 py-2.5 text-sm font-semibold rounded-lg border border-rose-500 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-all duration-300 ml-auto"
+                      title="Reset cookie preferences"
+                    >
+                      {lang === "en" && "Reset Cookies"}
+                      {lang === "th" && "รีเซ็ตคุกกี้"}
+                      {lang === "ja" && "クッキーをリセット"}
                     </button>
                   </div>
                 </>
