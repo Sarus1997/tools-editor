@@ -413,31 +413,6 @@ export default function Footer() {
                 </ul>
               </div>
 
-              {/* NEWSLETTER - Full width on mobile, half on tablet */}
-              <div className="sm:col-span-2 lg:col-span-2">
-                <h3 className="text-xs sm:text-sm font-bold uppercase tracking-[0.12em] sm:tracking-[0.15em] text-zinc-800 dark:text-zinc-200 mb-4 sm:mb-6 flex items-center gap-2">
-                  <span className="w-0.5 sm:w-1 h-3 sm:h-4 bg-linear-to-b from-pink-500 to-rose-500 rounded-full" />
-                  {lang === "en" && "Stay Updated"}
-                  {lang === "th" && "ติดตามข่าวสาร"}
-                  {lang === "ja" && "最新情報"}
-                </h3>
-                <p className="text-xs text-zinc-600 dark:text-zinc-400 mb-3 sm:mb-4 leading-relaxed">
-                  {lang === "en" && "Get the latest features and updates"}
-                  {lang === "th" && "รับฟีเจอร์และอัปเดตล่าสุด"}
-                  {lang === "ja" && "最新の機能とアップデートを入手"}
-                </p>
-                <div className="flex gap-2">
-                  <input
-                    type="email"
-                    placeholder={lang === "en" ? "Email" : lang === "th" ? "อีเมล" : "メール"}
-                    className="flex-1 px-3 py-2 text-xs rounded-lg bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 focus:border-indigo-500 dark:focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 outline-none transition-all duration-300"
-                  />
-                  <button className="px-3 sm:px-4 py-2 text-xs font-semibold rounded-lg bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 text-white hover:shadow-lg hover:shadow-purple-500/30 hover:scale-105 transition-all duration-300">
-                    →
-                  </button>
-                </div>
-              </div>
-
             </div>
           </div>
 

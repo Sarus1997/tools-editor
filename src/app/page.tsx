@@ -5,16 +5,14 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import {
-  FileEdit, Scissors, FileDown, FileUp, FileSearch, FileText,
-  Sparkles, Zap, Shield, Globe, Clock, CheckCircle, Users, Star,
-  ArrowRight, TrendingUp
+  FileEdit, Scissors, FileDown, FileUp, FileSearch, FileText, Sparkles, ArrowRight
 } from 'lucide-react';
 import { useLanguage } from "../contexts/LanguageContext";
+import OurPlatform from '@/components/OurPlatform';
 
 export default function PremiumLanding() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
-  const [currentStat, setCurrentStat] = useState(0);
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
 
   useEffect(() => {
@@ -23,13 +21,6 @@ export default function PremiumLanding() {
     };
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentStat((prev) => (prev + 1) % 4);
-    }, 3000);
-    return () => clearInterval(timer);
   }, []);
 
   // Detect theme from context or system
@@ -177,156 +168,6 @@ export default function PremiumLanding() {
     }
   ];
 
-  const stats = [
-    {
-      value: "500K+", label: (
-        <>
-          {lang === "en" && "Files Processed"}
-          {lang === "th" && "ไฟล์ที่ถูกประมวลผล"}
-          {lang === "ja" && "処理されたファイル"}
-        </>
-      ), icon: FileText, color: "from-blue-500 to-cyan-500"
-    },
-    {
-      value: "10K+", label: (
-        <>
-          {lang === "en" && "Hours Saved"}
-          {lang === "th" && "ชั่วโมงที่ประหยัด"}
-          {lang === "ja" && "節約された時間"}
-        </>
-      ), icon: Clock, color: "from-emerald-500 to-teal-500"
-    },
-    {
-      value: "50K+", label: (
-        <>
-          {lang === "en" && "Happy Users"}
-          {lang === "th" && "ผู้ใช้ที่มีความสุข"}
-          {lang === "ja" && "満足したユーザー"}
-        </>
-      ), icon: Users, color: "from-purple-500 to-pink-500"
-    },
-    {
-      value: "150+", label: (
-        <>
-          {lang === "en" && "Countries"}
-          {lang === "th" && "ประเทศ"}
-          {lang === "ja" && "国"}
-        </>
-      ), icon: Globe, color: "from-amber-500 to-orange-500"
-    }
-  ];
-
-  const features = [
-    {
-      icon: Shield,
-      title: (
-        <>
-          {lang === "en" && "Secure & Private"}
-          {lang === "th" && "ปลอดภัยและเป็นส่วนตัว"}
-          {lang === "ja" && "安全かつプライベート"}
-        </>
-      ),
-      desc: (
-        <>
-          {lang === "en" && "Files processed locally, never uploaded"}
-          {lang === "th" && "ไฟล์ถูกประมวลผลในเครื่อง ไม่เคยอัปโหลด"}
-          {lang === "ja" && "ファイルはローカルで処理され、アップロードされることはありません"}
-        </>
-      ),
-      linear: "from-emerald-400 to-teal-400"
-    },
-    {
-      icon: Zap,
-      title: (
-        <>
-          {lang === "en" && "Lightning Fast"}
-          {lang === "th" && "เร็วทันใจ"}
-          {lang === "ja" && "瞬時に"}
-        </>
-      ),
-      desc: (
-        <>
-          {lang === "en" && "Optimized for instant processing"}
-          {lang === "th" && "ไฟล์ถูกประมวลผลในเครื่อง ไม่เคยอัปโหลด"}
-          {lang === "ja" && "ファイルはローカルで処理され、アップロードされることはありません"}
-        </>
-      ),
-      linear: "from-amber-400 to-orange-400"
-    },
-    {
-      icon: Star,
-      title: (
-        <>
-          {lang === "en" && "100% Free, No Limits, No Watermarks"}
-          {lang === "th" && "ฟรี 100% ไม่มีข้อจำกัด ไม่มีลายน้ำ"}
-          {lang === "ja" && "100%無料、制限なし、透かしなし"}
-        </>
-      ),
-      desc: (
-        <>
-          {lang === "en" && "No limits, no watermarks, forever"}
-          {lang === "th" && "ไม่มีข้อจำกัด ไม่มีลายน้ำ ตลอดไป"}
-          {lang === "ja" && "制限なし、透かしなし、永久に"}
-        </>
-      ),
-      linear: "from-blue-400 to-cyan-400"
-    },
-    {
-      icon: Globe,
-      title: (
-        <>
-          {lang === "en" && "Multilingual"}
-          {lang === "th" && "หลายภาษา"}
-          {lang === "ja" && "多言語対応"}
-        </>
-      ),
-      desc: (
-        <>
-          {lang === "en" && "Full support for 3+ languages"}
-          {lang === "th" && "รองรับภาษา 3 ภาษาขึ้นไป"}
-          {lang === "ja" && "3つ以上の言語を完全にサポート"}
-        </>
-      ),
-      linear: "from-purple-400 to-pink-400"
-    },
-    {
-      icon: Users,
-      title: (
-        <>
-          {lang === "en" && "Trusted Globally"}
-          {lang === "th" && "เชื่อถือได้ทั่วโลก"}
-          {lang === "ja" && "世界中で信頼"}
-        </>
-      ),
-      desc: (
-        <>
-          {lang === "en" && "Used by thousands worldwide"}
-          {lang === "th" && "ใช้งานโดยพันคนทั่วโลก"}
-          {lang === "ja" && "世界中の数千人によって使用"}
-        </>
-      ),
-      linear: "from-rose-400 to-red-400"
-    },
-    {
-      icon: CheckCircle,
-      title: (
-        <>
-          {lang === "en" && "Easy to Use"}
-          {lang === "th" && "ใช้งานง่าย"}
-          {lang === "ja" && "使いやすい"}
-        </>
-      ),
-      desc: (
-        <>
-          {lang === "en" && "Intuitive design for everyone"}
-          {lang === "th" && "การออกแบบที่เข้าใจง่ายสำหรับทุกคน"}
-          {lang === "ja" && "誰もが使える直感的なデザイン"}
-        </>
-      ),
-      linear: "from-indigo-400 to-violet-400"
-    }
-  ];
-
   const isDark = theme === 'dark';
 
   return (
@@ -377,118 +218,87 @@ export default function PremiumLanding() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-20">
+      <div className="relative z-10 max-w-7xl mx-auto px-6">
         {/* Hero Section */}
-        <div className="text-center mb-32">
-          <div className="inline-block mb-6">
-            <div className={`flex items-center gap-2 backdrop-blur-xl px-4 py-2 rounded-full border ${isDark
-              ? 'bg-white/10 border-white/20'
-              : 'bg-white/60 border-slate-200/60'
-              }`}>
-              <Sparkles className="w-4 h-4 text-yellow-500 animate-pulse" />
-              <span className="text-sm font-medium">
-                {lang === "en" && "Professional Editor Tools"}
-                {lang === "th" && "เครื่องมือแก้ไขระดับมืออาชีพ"}
-                {lang === "ja" && "プロフェッショナルエディターツール"}
+        <div className="min-h-screen flex items-center justify-center px-4 py-12">
+          <div className="text-center max-w-5xl">
+            <div className="inline-block mb-8 animate-[fadeIn_0.6s_ease-out]">
+              <div className={`flex items-center gap-2 backdrop-blur-xl px-6 py-3 rounded-full border shadow-lg ${isDark
+                ? 'bg-white/10 border-white/20 shadow-white/5'
+                : 'bg-white/60 border-slate-200/60 shadow-slate-200/50'
+                }`}>
+                <Sparkles className="w-4 h-4 text-yellow-500 animate-pulse" />
+                <span className="text-sm font-medium">
+                  {lang === "en" && "Professional Editor Tools"}
+                  {lang === "th" && "เครื่องมือแก้ไขระดับมืออาชีพ"}
+                  {lang === "ja" && "プロフェッショナルエディターツール"}
+                </span>
+              </div>
+            </div>
+
+            <h1 className="text-6xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight animate-[fadeIn_0.8s_ease-out_0.2s_both]">
+              <span className="inline-block animate-[float_3s_ease-in-out_infinite]">
+                {lang === "en" && "Transform"}
+                {lang === "th" && "เปลี่ยนแปลง"}
+                {lang === "ja" && "変換"}
               </span>
+              <br />
+              <span className="bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-[shimmer_3s_ease-in-out_infinite] bg-size-[200%_100%]">
+                {lang === "en" && "Your Files"}
+                {lang === "th" && "ไฟล์ของคุณ"}
+                {lang === "ja" && "あなたのファイル"}
+              </span>
+            </h1>
+
+            <p className={`text-lg md:text-xl lg:text-2xl max-w-3xl mx-auto mb-12 leading-relaxed animate-[fadeIn_1s_ease-out_0.4s_both] ${isDark ? 'text-gray-300' : 'text-slate-600'
+              }`}>
+              {lang === "en" && "Edit, merge, and manage your documents with lightning-fast, "}
+              {lang === "th" && "แก้ไข ผสาน และจัดการเอกสารของคุณด้วยความเร็วสูง "}
+              {lang === "ja" && "ドキュメントを超高速で編集、マージ、管理します "}
+              <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-blue-400 font-semibold">
+                {lang === "en" && "professional-grade tools"}
+                {lang === "th" && "เครื่องมือระดับมืออาชีพ"}
+                {lang === "ja" && "プロフェッショナルグレードツール"}
+              </span>
+            </p>
+
+            <div className="flex flex-wrap gap-4 justify-center animate-[fadeIn_1.2s_ease-out_0.6s_both]">
+              <button className="group relative px-8 py-4 bg-linear-to-r from-blue-500 to-cyan-500 rounded-xl font-semibold text-lg text-white overflow-hidden transition-all hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/50">
+                <span className="relative z-10 flex items-center gap-2">
+                  {lang === "en" && "Get Started Free"}
+                  {lang === "th" && "เริ่มต้นฟรี"}
+                  {lang === "ja" && "無料で始める"}
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </span>
+                <div className="absolute inset-0 bg-linear-to-r from-cyan-500 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+              </button>
+              <button className={`px-8 py-4 backdrop-blur-xl rounded-xl font-semibold text-lg border transition-all hover:scale-105 ${isDark
+                ? 'bg-white/10 border-white/20 hover:bg-white/20'
+                : 'bg-white/60 border-slate-200/60 hover:bg-white/80'
+                }`}>
+                {lang === "en" && "Learn More"}
+                {lang === "th" && "เรียนรู้เพิ่มเติม"}
+                {lang === "ja" && "もっと詳しく"}
+              </button>
             </div>
           </div>
-
-          <h1 className="text-6xl md:text-8xl font-black mb-8 leading-tight">
-            <span className="inline-block animate-[float_3s_ease-in-out_infinite]">
-              {lang === "en" && "Transform"}
-              {lang === "th" && "เปลี่ยนแปลง"}
-              {lang === "ja" && "変換"}
-
-            </span>
-            <br />
-            <span className="bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-[shimmer_3s_ease-in-out_infinite] bg-size-[200%_100%]">
-              {lang === "en" && "Your Files"}
-              {lang === "th" && "ไฟล์ของคุณ"}
-              {lang === "ja" && "あなたのファイル"}
-            </span>
-          </h1>
-
-          <p className={`text-xl md:text-2xl max-w-3xl mx-auto mb-12 leading-relaxed ${isDark ? 'text-gray-300' : 'text-slate-600'
-            }`}>
-            {lang === "en" && "Edit, merge, and manage your documents with lightning-fast,"}
-            {lang === "th" && "แก้ไข ผสาน และจัดการเอกสารของคุณด้วยความเร็วสูง,"}
-            {lang === "ja" && "ドキュメントを超高速で編集、マージ、管理します、"}
-            <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-blue-400">
-              {lang === "en" && "professional-grade tools"}
-              {lang === "th" && "เครื่องมือระดับมืออาชีพ"}
-              {lang === "ja" && "プロフェッショナルエディターツール"}
-            </span>
-          </p>
-
-          <div className="flex flex-wrap gap-4 justify-center">
-            <button className="group relative px-8 py-4 bg-linear-to-r from-blue-500 to-cyan-500 rounded-xl font-semibold text-lg text-white overflow-hidden transition-all hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/50">
-              <span className="relative z-10 flex items-center gap-2">
-                {lang === "en" && "Get Started Free"}
-                {lang === "th" && "เริ่มต้นฟรี"}
-                {lang === "ja" && "無料で始める"}
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </span>
-              <div className="absolute inset-0 bg-linear-to-r from-cyan-500 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-            </button>
-            <button className={`px-8 py-4 backdrop-blur-xl rounded-xl font-semibold text-lg border transition-all hover:scale-105 ${isDark
-              ? 'bg-white/10 border-white/20 hover:bg-white/20'
-              : 'bg-white/60 border-slate-200/60 hover:bg-white/80'
-              }`}>
-              {lang === "en" && "Learn More"}
-              {lang === "th" && "เรียนรู้เพิ่มเติม"}
-              {lang === "ja" && "もっと詳しく"}
-            </button>
-          </div>
-        </div>
-
-        {/* Animated Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-32">
-          {stats.map((stat, i) => {
-            const Icon = stat.icon;
-            const isActive = currentStat === i;
-            return (
-              <div
-                key={i}
-                className={`relative p-6 rounded-2xl backdrop-blur-xl transition-all duration-500 ${isActive
-                  ? isDark
-                    ? 'bg-white/20 border-2 border-white/40 scale-105'
-                    : 'bg-white/60 border-2 border-slate-300/60 scale-105'
-                  : isDark
-                    ? 'bg-white/5 border border-white/10'
-                    : 'bg-white/30 border border-slate-200/30'
-                  }`}
-              >
-                <div className={`absolute inset-0 bg-linear-to-br ${stat.color} opacity-0 ${isActive ? 'opacity-20' : ''} transition-opacity duration-500 rounded-2xl`} />
-                <div className="relative">
-                  <Icon className={`w-8 h-8 mb-3 transition-transform duration-500 ${isActive ? 'scale-110' : ''}`} />
-                  <div className="text-3xl font-bold mb-1">{stat.value}</div>
-                  <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-slate-600'}`}>{stat.label}</div>
-                </div>
-                {isActive && (
-                  <div className="absolute top-2 right-2">
-                    <TrendingUp className="w-4 h-4 text-emerald-400 animate-bounce" />
-                  </div>
-                )}
-              </div>
-            );
-          })}
         </div>
 
         {/* Tools Grid */}
         <div className="mb-32">
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
-            {lang === "en" && "Powerful Tools at Your"}
-            {lang === "th" && "เครื่องมือทรงพลังที่ปลาย"}
-            {lang === "ja" && "強力なツールがあなたの"}
+            {lang === "en" && "PDF Management"}
+            {lang === "th" && "เครื่องมือจัดการ"}
+            {lang === "ja" && "PDFファイル"}
 
             <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-blue-400">
               {' '}
-              {lang === "en" && "Fingertips"}
-              {lang === "th" && "ปลายนิ้วของคุณ"}
-              {lang === "ja" && "指先に"}
+              {lang === "en" && "Tools"}
+              {lang === "th" && "ไฟล์ PDF"}
+              {lang === "ja" && "管理ツール"}
             </span>
           </h2>
+
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {tools.map((tool, i) => {
@@ -563,40 +373,7 @@ export default function PremiumLanding() {
         </div>
 
         {/* Features Section */}
-        <div className="mb-32">
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
-            {lang === "en" && "Why Choose"}
-            {lang === "th" && "ทำไมต้องเลือก"}
-            {lang === "ja" && "なぜ私たちのプラットフォームを選ぶのか "}
-            <span className="text-transparent bg-clip-text bg-linear-to-r from-purple-400 to-pink-400">
-              {lang === "en" && "Our Platform"}
-              {lang === "th" && "แพลตฟอร์มของเรา"}
-              {lang === "ja" && "私たちのプラットフォーム"}
-            </span>
-          </h2>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {features.map((feature, i) => {
-              const Icon = feature.icon;
-              return (
-                <div
-                  key={i}
-                  className={`group p-8 rounded-2xl backdrop-blur-xl border transition-all duration-500 hover:scale-105 ${isDark
-                    ? 'bg-white/5 border-white/10 hover:bg-white/10'
-                    : 'bg-white/30 border-slate-200/30 hover:bg-white/50'
-                    }`}
-                  style={{ animationDelay: `${i * 100}ms` }}
-                >
-                  <div className={`w-12 h-12 mb-4 rounded-lg bg-linear-to-br ${feature.linear} flex items-center justify-center group-hover:scale-110 transition-transform duration-500`}>
-                    <Icon className="w-6 h-6 text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
-                  <p className={isDark ? 'text-gray-400' : 'text-slate-600'}>{feature.desc}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        <OurPlatform />
       </div>
 
       <style>{`
