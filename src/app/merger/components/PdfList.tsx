@@ -1,8 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
-
 import {
   DndContext,
   closestCenter,
@@ -22,33 +20,12 @@ const MAX_FILES = 10;
 interface Props {
   files: PDFFile[];
   setFiles: React.Dispatch<React.SetStateAction<PDFFile[]>>;
+  onDelete: (id: string) => void;
+  isDark: boolean;
 }
 
-export default function PdfList({ files, setFiles }: Props) {
+export default function PdfList({ files, setFiles, onDelete, isDark }: Props) {
   const { lang } = useLanguage();
-  const [theme, setTheme] = useState<"light" | "dark">("dark");
-
-  /* ---------------- theme sync ---------------- */
-  useEffect(() => {
-    const checkTheme = () => {
-      setTheme(
-        document.documentElement.classList.contains("dark")
-          ? "dark"
-          : "light"
-      );
-    };
-
-    checkTheme();
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  const isDark = theme === "dark";
 
   /* ---------------- drag logic ---------------- */
   const handleDragEnd = (event: DragEndEvent) => {
@@ -64,6 +41,10 @@ export default function PdfList({ files, setFiles }: Props) {
         order: i,
       }))
     );
+  };
+
+  const handleClearAll = () => {
+    setFiles([]);
   };
 
   return (
@@ -93,8 +74,11 @@ export default function PdfList({ files, setFiles }: Props) {
 
         {files.length > 0 && (
           <button
-            onClick={() => setFiles([])}
-            className="flex items-center gap-1 text-sm text-red-500 hover:text-red-600 transition"
+            onClick={handleClearAll}
+            className={`flex items-center gap-1 text-sm transition relative z-10 ${isDark
+              ? "text-red-400 hover:text-red-300"
+              : "text-red-500 hover:text-red-600"
+              } px-3 py-2 rounded-lg hover:bg-red-500/10`}
           >
             <Trash2 size={16} />
             {lang === "en" && "Clear All"}
@@ -136,11 +120,8 @@ export default function PdfList({ files, setFiles }: Props) {
                 <PdfItem
                   key={file.id}
                   file={file}
-                  onRemove={() =>
-                    setFiles((prev) =>
-                      prev.filter((f) => f.id !== file.id)
-                    )
-                  }
+                  onRemove={() => onDelete(file.id)}
+                  isDark={isDark}
                 />
               ))}
             </div>

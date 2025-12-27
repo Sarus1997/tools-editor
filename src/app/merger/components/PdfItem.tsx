@@ -8,9 +8,10 @@ import type { PDFFile } from "../types";
 interface Props {
   file: PDFFile;
   onRemove: () => void;
+  isDark: boolean;
 }
 
-export default function PdfItem({ file, onRemove }: Props) {
+export default function PdfItem({ file, onRemove, isDark }: Props) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: file.id });
 
@@ -19,32 +20,51 @@ export default function PdfItem({ file, onRemove }: Props) {
     transition,
   };
 
+  const handleRemoveClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // ป้องกัน event bubbling
+    e.preventDefault(); // ป้องกันพฤติกรรมเริ่มต้น
+    onRemove();
+  };
+
   return (
     <div
       ref={setNodeRef}
       style={style}
-      {...attributes}
-      {...listeners}
-      className="
+      className={`
         group flex items-center justify-between
         p-4 rounded-2xl
-        bg-white/5 backdrop-blur
-        border border-white/10
-        transition-all duration-200
-        hover:bg-white/10 hover:shadow-lg hover:shadow-cyan-500/10
-        cursor-grab active:cursor-grabbing
-      "
+        backdrop-blur
+        border transition-all duration-200
+        hover:shadow-lg hover:shadow-cyan-500/10
+        ${isDark
+          ? "bg-white/5 border-white/10 hover:bg-white/10"
+          : "bg-gray-50/80 border-gray-200 hover:bg-gray-100"
+        }
+      `}
     >
-      <div className="flex items-center gap-3 overflow-hidden">
-        <FileText className="text-cyan-400 shrink-0" />
-        <span className="truncate text-sm font-medium text-gray-200 group-hover:text-white transition">
+      {/* ส่วนที่สามารถลากได้ */}
+      <div
+        {...attributes}
+        {...listeners}
+        className="flex items-center gap-3 overflow-hidden flex-1 cursor-grab active:cursor-grabbing"
+      >
+        <FileText className={`${isDark ? "text-cyan-400" : "text-cyan-500"} shrink-0`} />
+        <span className={`truncate text-sm font-medium transition ${isDark
+          ? "text-gray-100 group-hover:text-white"
+          : "text-gray-800 group-hover:text-gray-900"
+          }`}>
           {file.name}
         </span>
       </div>
 
+      {/* ปุ่มลบแยกต่างหาก ไม่ควรมี drag listener */}
       <button
-        onClick={onRemove}
-        className="text-red-400 hover:text-red-500 transition"
+        onClick={handleRemoveClick}
+        className={`relative z-10 ${isDark
+          ? "text-red-400 hover:text-red-300"
+          : "text-red-500 hover:text-red-600"
+          } transition p-2 rounded-lg hover:bg-red-500/10`}
+        style={{ touchAction: "manipulation" }} // สำหรับ mobile
       >
         <X size={18} />
       </button>
