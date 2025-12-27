@@ -158,8 +158,23 @@ export default function MergerPage() {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
+
+        {/* Back Button */}
+        <Link
+          href="/"
+          className={`inline-flex items-center gap-2 text-sm transition py-10 ${isDark
+            ? "text-gray-400 hover:text-white"
+            : "text-gray-500 hover:text-gray-900"
+            }`}
+        >
+          <ArrowLeft size={18} />
+          {lang === "en" && "Back to Home"}
+          {lang === "th" && "กลับหน้าแรก"}
+          {lang === "ja" && "ホームに戻る"}
+        </Link>
+
         {/* Header Section */}
-        <div className="pt-12 pb-8">
+        <div className="pt-3 pb-8">
           <div className="flex flex-col items-center text-center mb-10">
             <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full backdrop-blur-xl border border-white/10 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 mb-6">
               <Sparkles className="w-4 h-4 text-yellow-500 animate-pulse" />
@@ -185,20 +200,6 @@ export default function MergerPage() {
                 "複数のPDFファイルを素早く簡単に1つのドキュメントに結合"}
             </p>
           </div>
-
-          {/* Back Button */}
-          <Link
-            href="/"
-            className={`inline-flex items-center gap-2 text-sm transition ${isDark
-              ? "text-gray-400 hover:text-white"
-              : "text-gray-500 hover:text-gray-900"
-              }`}
-          >
-            <ArrowLeft size={18} />
-            {lang === "en" && "Back to Home"}
-            {lang === "th" && "กลับหน้าแรก"}
-            {lang === "ja" && "ホームに戻る"}
-          </Link>
         </div>
 
         {/* Main Card */}
