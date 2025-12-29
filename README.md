@@ -49,11 +49,12 @@
 
 <div align="center">
 
-|                                                   Technology                                                    |            Purpose             |
-| :-------------------------------------------------------------------------------------------------------------: | :----------------------------: |
-|              ![Next.js](https://img.shields.io/badge/Next.js-black?style=flat-square&logo=next.js)              | React framework for production |
-| ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white) |     Type-safe development      |
-|               ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel)               |      Deployment & hosting      |
+|                                                      Technology                                                       |            Purpose             |
+| :-------------------------------------------------------------------------------------------------------------------: | :----------------------------: |
+|                 ![Next.js](https://img.shields.io/badge/Next.js-black?style=flat-square&logo=next.js)                 | React framework for production |
+|    ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white)    |     Type-safe development      |
+| ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white) |  Utility-first CSS framework   |
+|                  ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel)                  |      Deployment & hosting      |
 
 </div>
 
@@ -134,6 +135,6 @@ See the [LICENSE](https://github.com/Sarus1997/tools-editor/blob/master/LICENSE)
 
 ### 💖 Built with passion by developers, for developers
 
-**[Live Demo](https://tools-editor.vercel.app/)** • **[Documentation](https://github.com/Sarus1997/tools-editor)** • **[Report Issue](https://github.com/Sarus1997/tools-editor/issues)**
+**[Live Demo](https://tools-editor.vercel.app/)** • **[Documentation](https://github.com/Sarus1997/tools-editor)**
 
 </div>
