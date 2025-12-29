@@ -62,5 +62,5 @@ npm run build
 ## 📄 License
 ```bash
 Distributed under the **MIT License**.  
-See the [LICENSE](./LICENSE) file for more information.
+See the [LICENSE](https://github.com/Sarus1997/tools-editor/blob/main/LICENSE) file for more information.
 ```
