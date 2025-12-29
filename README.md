@@ -62,4 +62,4 @@ npm run build
 ## 📄 License
 
 Distributed under the **MIT License**.  
-See the [LICENSE](https://github.com/Sarus1997/tools-editor/blob/main/LICENSE) file for more information.
+See the [LICENSE](https://github.com/Sarus1997/tools-editor/blob/master/LICENSE) file for more information.
