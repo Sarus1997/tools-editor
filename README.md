@@ -60,7 +60,6 @@ npm run build
 และสั่ง deploy ผ่าน Vercel ได้ทันที (แค่ connect repo → deploy)
 
 ## 📄 License
-```bash
+
 Distributed under the **MIT License**.  
 See the [LICENSE](https://github.com/Sarus1997/tools-editor/blob/main/LICENSE) file for more information.
-```
